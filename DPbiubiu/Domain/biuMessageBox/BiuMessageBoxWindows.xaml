@@ -1,0 +1,27 @@
+﻿<Window x:Class="biubiu.Domain.biuMessageBox.BiuMessageBoxWindows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:biubiu.Domain.biuMessageBox"
+        mc:Ignorable="d" WindowStartupLocation="CenterOwner" 
+        ResizeMode="NoResize" Padding="10" Background="#EFEFEF" Topmost="True"
+        Title="提示窗" Height="255" Width="455" >
+    <Border BorderThickness="1" BorderBrush="Gray" Margin="4">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="140"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Image x:Name="MessageImage" Width="80" Height="80" Margin="30 0 20 0" ></Image>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxWidth="300" MaxHeight="120" VerticalAlignment="Center" Margin="0 0 20 0">
+                    <TextBlock x:Name="MessageText" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                       TextWrapping="Wrap" FontSize="26"  Foreground="#404040" Margin="10 0"/>
+                </ScrollViewer>
+            </StackPanel>
+            <StackPanel x:Name="ButtonsStackPanel" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

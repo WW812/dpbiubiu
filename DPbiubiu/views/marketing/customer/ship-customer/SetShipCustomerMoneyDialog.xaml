@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="biubiu.views.marketing.customer.ship_customer.SetShipCustomerMoneyDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:biubiu.views.marketing.customer.ship_customer"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:vm ="clr-namespace:biubiu.view_model"
+             xmlns:Converter="clr-namespace:biubiu.Converter" x:Name="userControl" 
+             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+             xmlns:biuCovert ="clr-namespace:biubiu.Converter"
+             xmlns:domain="clr-namespace:biubiu.Domain"
+             mc:Ignorable="d" Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="validationTemplate">
+            <Grid>
+                <AdornedElementPlaceholder/>
+            </Grid>
+        </ControlTemplate>
+        <biuCovert:IntToBooleanConverter x:Key="IntToBooleanConverter"/>
+        <materialDesignConverters:BooleanToVisibilityConverter x:Key="ReverseInvertedBooleanToVisibilityConverter" TrueValue="Hidden" FalseValue="Visible" />
+    </UserControl.Resources>
+    <Grid Validation.ErrorTemplate="{StaticResource validationTemplate}" x:Name="grid" Margin="16" >
+        <Grid.BindingGroup>
+            <BindingGroup NotifyOnValidationError="True">
+                <BindingGroup.ValidationRules>
+                    <vm:NotEmptyValidationRule ValidationStep="ConvertedProposedValue"/>
+                </BindingGroup.ValidationRules>
+            </BindingGroup>
+        </Grid.BindingGroup>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock><Run Text="设置客户料款" FontSize="26"/></TextBlock>
+        <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0" />
+
+        <TextBox x:Name="MoneyTextBox" FontSize="22" Grid.Row="2" Margin="0 0 0 10" materialDesign:HintAssist.Hint="金额" LostFocus="TextBox_LostFocus" 
+                 GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown" MaxLength="10"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="TextBox_PreviewTextInput">
+            <TextBox.Text>
+                <Binding Path="CustomerMoney.Money" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <vm:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal"  Margin="0 10" >
+            <DatePicker x:Name="PayDate" Language="zh-CN" FontSize="22" materialDesign:HintAssist.Hint="付款日期" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
+            <!--<materialDesign:TimePicker x:Name="PayTime" FontSize="22" Width="110" Style="{StaticResource MaterialDesignFloatingHintTimePicker}" materialDesign:HintAssist.Hint="时间" Margin="20,12,0,0" Is24Hours="True"/>-->
+            <domain:TimePicker  x:Name="PayTime" FontSize="22" Margin="20,12,0,0" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal"  Margin="0 10" >
+            <TextBlock Text="支付类型:" FontSize="22" Margin="0 0 10 0"/>
+            <CheckBox x:Name="checkBox" Style="{StaticResource MaterialDesignCheckBox}" 
+                      IsChecked="{Binding CustomerMoney.PayType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntToBooleanConverter}}"
+                       FontSize="22">承兑
+            </CheckBox>
+        </StackPanel>
+
+        <Grid Grid.Row="5" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=checkBox}" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBox FontSize="22" Grid.Row="0" Margin="0 0 0 10" materialDesign:HintAssist.Hint="承兑编号" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding CustomerMoney.HonourNum}"></TextBox>
+            <TextBox x:Name="HonourDiscountTextBox" FontSize="22" Grid.Row="1" Margin="0 0 0 10" materialDesign:HintAssist.Hint="贴现扣款" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="0" PreviewTextInput="TextBox_PreviewTextInput" ></TextBox>
+            <DatePicker x:Name="HonourDate" Grid.Row="2" Language="zh-CN" FontSize="20" materialDesign:HintAssist.Hint="承兑到期日" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
+        </Grid>
+
+        <ComboBox Grid.Row="5" x:Name="PayTypeComboBox" Visibility="{Binding IsChecked, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}, ElementName=checkBox}"
+                  ToolTip="选择支付类型" ItemsSource="{Binding PayTypeItems}" DisplayMemberPath="Name" materialDesign:HintAssist.Hint="选择支付类型"
+                  FontSize="20" ScrollViewer.ScrollChanged="PayTypeComboBox_ScrollChanged">
+        </ComboBox>
+
+        <TextBox x:Name="NoteTextBox" materialDesign:HintAssist.Hint="备注" Style="{DynamicResource MaterialDesignFloatingHintTextBox}"                 
+                 Margin="0 6 0 0" Text="{Binding CustomerMoney.Note}"
+                 FontSize="22" Grid.Row="6">
+        </TextBox>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="7" Margin="0 16 0 0" HorizontalAlignment="Center">
+            <Button x:Name="CreateShipCustomerButton" IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}" 
+                     Content="提交" Click="SubmitButton_Click" FontSize="22"/>
+            <Button x:Name="CancleBtn" IsCancel="True" Margin="8 0 0 0" Style="{DynamicResource MaterialDesignFlatButton}" FontSize="22"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Content="取消">
+                <Button.CommandParameter>
+                    <system:Boolean>False</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

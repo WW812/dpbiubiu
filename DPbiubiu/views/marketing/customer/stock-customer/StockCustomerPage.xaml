@@ -1,0 +1,329 @@
+﻿<UserControl x:Class="biubiu.views.marketing.customer.stock_customer.StockCustomerPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:biubiu.views.marketing.customer.stock_customer"
+             xmlns:domain="clr-namespace:biubiu.Domain"
+             xmlns:biuCovert ="clr-namespace:biubiu.Converter"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />-->
+            </ResourceDictionary.MergedDictionaries>
+            <ControlTemplate x:Key="validationTemplate">
+                <Grid>
+                    <AdornedElementPlaceholder/>
+                </Grid>
+            </ControlTemplate>
+            <biuCovert:LongToDateTimeConverter x:Key="LongToDateTimeConverter"/>
+            <biuCovert:DeductWeightTypeToBooleanConverter x:Key="DeductWeightTypeToBooleanConverter"/>
+            <biuCovert:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
+            <ContextMenu x:Key="ContextMenu">
+                <MenuItem FontSize="20" Header="删除客户" Command="{Binding DeleteCustomerCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
+                          IsEnabled="{Binding DeletedCustomer,Converter={StaticResource ReverseBooleanConverter}}"/>
+            </ContextMenu>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel>
+        <!--左列表-->
+        <Border DockPanel.Dock="Left"  BorderThickness="1" BorderBrush="#FFACACAC" Width="660" ClipToBounds="True">
+            <Grid Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Padding="0" Margin="5" Command="{Binding RunCreateStockCustomerDialogCommand}" ToolTip="新建客户(进料)" IsEnabled="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}, ElementName=DeletedTogBtn}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="AccountPlus" VerticalAlignment="Center" Margin="0"/>
+                            <TextBlock Margin="4 0 0 0" Text="开户"/>
+                        </StackPanel>
+                    </Button>
+                    <!-- 导出详单 -->
+                    <!--
+                    <Button x:Name="ExportCusOrderDetailsReportButton" Padding="0" Margin="5" Grid.Column="1" Style="{DynamicResource MaterialDesignFlatButton}" ToolTip="导出选中客户详单"
+                            Click="Button_Click">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="FileExport" VerticalAlignment="Center" Margin="0"/>
+                            <TextBlock Margin="4 0 0 0" Text="详单"/>
+                        </StackPanel>
+                    </Button>
+                    -->
+                    <!-- 时间选择Popup -->
+                    <Popup x:Name="ExportPopup" Grid.Column="1" IsOpen="False" StaysOpen="False" PlacementTarget="{Binding ElementName=ExportCusOrderDetailsReportButton}" AllowsTransparency="True">
+                        <Border BorderThickness="2" materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="5" BorderBrush="#FF808080" CornerRadius="2" Background="#FFFFFF">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="选择时间段" FontSize="14" Margin="4"/>
+                                <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0" />
+                                <DatePicker Grid.Row="2" Grid.Column="0" x:Name="StartDate"  Margin="4" VerticalAlignment="Top" Language="zh-CN" FontSize="14"
+                                            materialDesign:HintAssist.Hint="开始日期" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                            SelectedDate="{Binding ExportOrderStartDate}"/>
+                                <materialDesign:TimePicker Grid.Row="2" Grid.Column="1" Margin="4" x:Name="StartTime" VerticalAlignment="Bottom" FontSize="14" Style="{StaticResource MaterialDesignFloatingHintTimePicker}" materialDesign:HintAssist.Hint="时间" />
+                                <DatePicker x:Name="EndtDate" Grid.Row="3" Grid.Column="0" Margin="4" VerticalAlignment="Top" Language="zh-CN" FontSize="14" materialDesign:HintAssist.Hint="结束日期" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
+                                <materialDesign:TimePicker x:Name="EndTime" Grid.Row="3" Margin="4" Grid.Column="1" FontSize="14" VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignFloatingHintTimePicker}" materialDesign:HintAssist.Hint="时间" />
+                                <Separator Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0 4" />
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="*日期置空为导出全部" FontSize="12"  VerticalAlignment="Center"/>
+                                <Button Grid.Row="5" Grid.Column="1" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding ExportCusOrderDetailReportCommand}">导 出</Button>
+                            </Grid>
+                        </Border>
+                    </Popup>
+                    <TextBox x:Name="SearchCustomerTextBox" Grid.Column="2" materialDesign:HintAssist.Hint="搜索客户" Margin="5" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top"
+                              TextChanged="TextBox_TextChanged"/>
+                    <StackPanel Orientation="Horizontal" Grid.Column="3">
+                        <TextBlock Text="已删除客户:" VerticalAlignment="Center" FontSize="14" Margin="0 0 5 0"/>
+                        <ToggleButton x:Name="DeletedTogBtn" Style="{StaticResource MaterialDesignSwitchDarkToggleButton}" ToolTip="显示已删除客户列表" IsChecked="{Binding DeletedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsChecked, Converter={StaticResource InverseBoolToVisConverter}, ElementName=DeletedTogBtn}" />
+                    </StackPanel>
+                </Grid>
+
+                <DataGrid x:Name="CustomerListView" Grid.Row="1" ItemsSource="{Binding StockCustomerItems}" SelectedItem="{Binding CurrentStockCustomer}" SelectionMode="Single"
+                          IsReadOnly="True" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" FontSize="16"
+                          ScrollViewer.ScrollChanged="CustomerListView_ScrollChanged" LoadingRow="DataGrid_LoadingRow" ContextMenu="{StaticResource ContextMenu}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="序号" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGridRow}}, Path=Header}"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                   Margin="10,0,0,0"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="客户名" Binding="{Binding Path=Name}"/>
+                        <DataGridTextColumn Header="未支付金额" Binding="{Binding Path=NonpaymentAmount}"/>
+                        <DataGridTextColumn Header="未支付单数" Binding="{Binding Path=NonpaymentNum}"/>
+                        <DataGridTextColumn Header="开户时间" Binding="{Binding Path=CreateTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" FontSize="12"/>
+                        <DataGridTextColumn Header="开户人" Binding="{Binding Path=CreateUser}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+        <!--右选择项-->
+        <DockPanel Margin="10 0">
+            <Border DockPanel.Dock="Top"  Margin="0 0 0 10" Background="White" Padding="20" BorderThickness="1" BorderBrush="#FFACACAC">
+                <StackPanel Orientation="Horizontal" >
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" FontSize="18" Command="{Binding RunChangeStockCustomerCommand}" IsEnabled="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}, ElementName=DeletedTogBtn}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="AccountCardDetails" VerticalAlignment="Center" Margin="0"/>
+                            <TextBlock Margin="4, 0, 0,0" Text="客户信息"/>
+                        </StackPanel>
+                    </Button>
+                    <TextBlock FontSize="18" Margin="8 0" VerticalAlignment="Center">
+                       当前有 <Run FontWeight="Bold" Text="{Binding CurrentStockCustomer.NonpaymentNum}"></Run> 笔订单，总金额 <Run FontWeight="Bold" Text="{Binding CurrentStockCustomer.NonpaymentAmount}"></Run> 元未支付予 <Run FontWeight="Bold" Text="{Binding CurrentStockCustomer.Name}"></Run>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <materialDesign:Snackbar x:Name="SnackbarOne" DockPanel.Dock="Bottom"
+         Message="{Binding MessageBar.Message}" IsActive="{Binding MessageBar.IsActive}"
+         HorizontalAlignment="Stretch"/>
+
+            <TabControl Grid.Row="1" HorizontalAlignment="Stretch" SelectedIndex="{Binding SelectedIndex}">
+                <TabItem Header="采购单价" Padding="4" FontSize="20">
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top" Margin="8" Width="600" HorizontalAlignment="Left" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock FontSize="20" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="{Binding EditStockCustomerGoodsPrice.GoodsName}"></TextBlock>
+                            <TextBlock FontSize="14" Grid.Row="1" Grid.Column="0" Text="单价:" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4"></TextBlock>
+                            <TextBox FontSize="14" Grid.Row="1" Grid.Column="1" Text="{Binding EditStockCustomerGoodsPrice.CustomerPrice}" Margin="4"
+                                     InputMethod.IsInputMethodEnabled="False" PreviewTextInput="TextBlock_PreviewTextInput" MaxLength="10"
+                                     LostFocus="TextBox_LostFocus"></TextBox>
+                            <!--
+                            <TextBlock FontSize="14" Grid.Row="1" Grid.Column="2" Text="扣吨:" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4"></TextBlock>
+                            <Grid Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox FontSize="14" Text="{Binding EditStockCustomerGoodsPrice.DeductWeight}"></TextBox>
+                                <CheckBox Grid.Column="1" FontSize="12" Style="{StaticResource MaterialDesignCheckBox}" VerticalAlignment="Bottom" Margin="4 0" ToolTip="按照百分比进行扣吨"
+                                          IsChecked="{Binding EditStockCustomerGoodsPrice.DeductWeightType}">
+                                    百分比
+                                </CheckBox>
+                            </Grid>
+                            -->
+                            <TextBlock FontSize="14" Grid.Row="2" Grid.Column="0" Text="备注:" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4"></TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="14" Margin="4" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding EditStockCustomerGoodsPrice.Note}"/>
+                            <Button Grid.Row="2" Grid.Column="4" Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding SubmitGoodsPriceCommand}" IsEnabled="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}, ElementName=DeletedTogBtn}">
+                                保存修改
+                            </Button>
+                        </Grid>
+                        <domain:PageControl Margin="0 8 0 0" DockPanel.Dock="Bottom"/>
+                        <DataGrid Margin="0 8 0 0" IsReadOnly="True" CanUserSortColumns="True"
+                                  CanUserAddRows="False" AutoGenerateColumns="False" FontSize="18"
+                                  SelectedItem="{Binding CurrentStockCustomerGoodsPrice}"
+                                  ItemsSource="{Binding StockCustomerGoodsPriceItems}" LoadingRow="DataGrid_LoadingRow">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="序号" >
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGridRow}}, Path=Header}"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                   Margin="10,0,0,0"></TextBlock>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="料品" Binding="{Binding Path=GoodsName}" />
+                                <DataGridTextColumn Header="单价" Binding="{Binding Path=CustomerPrice}" />
+                                <!--<DataGridTextColumn Header="扣吨" Binding="{Binding Path=DeductWeightText}" />-->
+                                <DataGridTextColumn Header="备注" Binding="{Binding Path=Note}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="车辆记录" Padding="4" FontSize="20">
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top" Margin="8" Width="600" HorizontalAlignment="Left">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock FontSize="14" Grid.Row="0" Grid.Column="0" Text="车牌号:" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4"></TextBlock>
+                            <TextBox FontSize="14" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding EditStockCustomerCar.CarId}" Margin="4"></TextBox>
+                            <TextBlock FontSize="14" Grid.Row="1" Grid.Column="0" Text="车主:" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4"></TextBlock>
+                            <TextBox FontSize="14" Grid.Row="1" Grid.Column="1" Text="{Binding EditStockCustomerCar.Owner}" Margin="4"></TextBox>
+                            <TextBlock FontSize="14" Grid.Row="1" Grid.Column="2" Text="联系方式:" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4"></TextBlock>
+                            <TextBox FontSize="14" Grid.Row="1" Grid.Column="3" Text="{Binding EditStockCustomerCar.Contact}" Margin="4"></TextBox>
+                            <TextBlock FontSize="14" Grid.Row="2" Grid.Column="0" Text="备注:" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4"></TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="14" Margin="4" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding EditStockCustomerCar.Note}"/>
+                            <Button Grid.Row="2" Grid.Column="4" Style="{StaticResource MaterialDesignFlatButton}" 
+                                    Command="{Binding SubmitCarCommand}" IsEnabled="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}, ElementName=DeletedTogBtn}"
+                                    Content="新增车辆">
+                            </Button>
+                        </Grid>
+                        <domain:PageControl Margin="0 8 0 0" DockPanel.Dock="Bottom"/>
+                        <DataGrid Margin="0 8 0 0" IsReadOnly="True" CanUserSortColumns="True" CanUserAddRows="False"
+                                  AutoGenerateColumns="False" FontSize="18" ItemsSource="{Binding StockCustomerCarItems}"
+                                  LoadingRow="DataGrid_LoadingRow" >
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="序号" >
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGridRow}}, Path=Header}"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                   Margin="10,0,0,0"></TextBlock>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="车牌号" Binding="{Binding Path=CarId}" />
+                                <DataGridTextColumn Header="车主" Binding="{Binding Path=Owner}" />
+                                <DataGridTextColumn Header="联系方式" Binding="{Binding Path=Contact}" />
+                                <DataGridTextColumn Header="备注" Binding="{Binding Path=Note}" />
+                                <DataGridTextColumn Header="添加人" Binding="{Binding Path=CreateUser}" />
+                                <DataGridTemplateColumn Header="操作">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Width="60" Height="20" Padding="0" Margin="0" ToolTip="删除车辆" Command="{Binding DataContext.DeleteCarCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding Path=.}"  Style="{DynamicResource MaterialDesignFlatButton}">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Center" Margin="0"/>
+                                                    <TextBlock Margin="4, 0, 0,0" Text="删除"/>
+                                                </StackPanel>
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="订单记录" Padding="4" FontSize="20">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top"  Margin="8" Orientation="Horizontal">
+                            <ListBox SelectedIndex="{Binding SelectedIndexOrder}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBoxItem>全部订单</ListBoxItem>
+                                <ListBoxItem>已支付</ListBoxItem>
+                                <ListBoxItem>未支付</ListBoxItem>
+                            </ListBox>
+                        </StackPanel>
+                        <domain:PageControl Margin="0 8 0 0" DockPanel.Dock="Bottom"/>
+                        <DataGrid Margin="0 8 0 0" IsReadOnly="True" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" FontSize="16" ItemsSource="{Binding StockCustomerOrderItems}" LoadingRow="DataGrid_LoadingRow_1">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="订单号" Binding="{Binding Path=OrderNo}" />
+                                <DataGridTextColumn Header="车号" Binding="{Binding Path=CarId}" />
+                                <DataGridTextColumn Header="毛重" Binding="{Binding Path=CarGrossWeight}"/>
+                                <DataGridTextColumn Header="皮重" Binding="{Binding Path=CarTare}" />
+                                <DataGridTextColumn Header="净重" Binding="{Binding Path=CarNetWeight}"/>
+                                <DataGridTextColumn Header="扣吨" Binding="{Binding Path=DeductWeight}" />
+                                <DataGridTextColumn Header="料品名称" Binding="{Binding Path=Goods.Name}" />
+                                <DataGridTextColumn Header="执行单价" Binding="{Binding Path=GoodsRealPrice}" />
+                                <DataGridTextColumn Header="单据金额" Binding="{Binding Path=RealMoney}" />
+                                <DataGridTextColumn Header="进厂时间" FontSize="14"  Binding="{Binding Path=EnterTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" />
+                                <DataGridTextColumn Header="进厂司磅员" Binding="{Binding Path=EnterUser.NickName}" />
+                                <DataGridTextColumn Header="进厂地磅号" Binding="{Binding Path=EnterPonderation}" />
+                                <DataGridTextColumn Header="出厂时间" FontSize="14"  Binding="{Binding Path=ExitTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" />
+                                <DataGridTextColumn Header="出厂司磅员" Binding="{Binding Path=ExitUser.NickName}" />
+                                <DataGridTextColumn Header="出厂地磅号" Binding="{Binding Path=ExitPonderation}" />
+                                <!--
+                                <DataGridTextColumn Header="修改人" Binding="{Binding Path=EditUser.NickName}" />
+                                <DataGridTextColumn Header="修改时间" FontSize="14" Binding="{Binding Path=EditTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" />
+                                <DataGridTextColumn Header="修改原因" Binding="{Binding Path=EditReason}" />
+                                <DataGridTemplateColumn Header="操作">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Width="60" Height="20" Padding="0" Margin="0" ToolTip="查看单据详情" Command="{Binding DataContext.RunOrderDetailsCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding Path=.}"  Style="{DynamicResource MaterialDesignFlatButton}">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <materialDesign:PackIcon VerticalAlignment="Center" Kind="EyeOutline"  Margin="0"/>
+                                                    <TextBlock Margin="4, 0, 0,0" Text="详情"/>
+                                                </StackPanel>
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                -->
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="biubiu.views.setting.role.NewUserDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:local="clr-namespace:biubiu.views.setting.role"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:vm ="clr-namespace:biubiu.view_model"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Slider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <ControlTemplate x:Key="validationTemplate">
+                <Grid>
+                    <AdornedElementPlaceholder/>
+                </Grid>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Validation.ErrorTemplate="{StaticResource validationTemplate}" x:Name="grid" Margin="16" MinWidth="300">
+        <Grid.BindingGroup>
+            <BindingGroup NotifyOnValidationError="True">
+                <BindingGroup.ValidationRules>
+                    <vm:NotEmptyValidationRule ValidationStep="ConvertedProposedValue"/>
+                </BindingGroup.ValidationRules>
+            </BindingGroup>
+        </Grid.BindingGroup>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock FontSize="26">新增用户</TextBlock>
+        <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0" />
+        <TextBox x:Name="UserNameText" wpf:HintAssist.Hint="用户名" Style="{DynamicResource MaterialDesignFloatingHintTextBox}"                 
+                 Margin="0 8 0 0"
+                 FontSize="22" Grid.Row="2">
+            <TextBox.Text>
+                <Binding Path="UserName" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <vm:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <StackPanel Grid.Row="3">
+            <PasswordBox x:Name="PassWord" wpf:HintAssist.Hint="密码" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                 Margin="0 14 0 0" PasswordChanged="PassWord_PasswordChanged"
+                 FontSize="22" >
+            </PasswordBox>
+            <TextBlock x:Name="PassWordWaring" Foreground="Red" Text="不可为空" FontSize="10"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4">
+            <PasswordBox x:Name="ConfirmPassWord" wpf:HintAssist.Hint="确认密码" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                 Margin="0 8 0 0" PasswordChanged="ConfirmPassWord_PasswordChanged"
+                 FontSize="22" >
+            </PasswordBox>
+            <TextBlock x:Name="ConfirmPassWordWaring" Foreground="Red" FontSize="10" Text="不可为空"/>
+        </StackPanel>
+
+        <TextBox x:Name="NickNameText" wpf:HintAssist.Hint="昵称"
+                 Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0 6 0 0"
+                 FontSize="22" Grid.Row="5">
+            <TextBox.Text>
+                <Binding Path="UserName" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <vm:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBlock  Margin="0 20 0 10" FontSize="22" Grid.Row="6" Style="{StaticResource MaterialDesignSubheadingTextBlock}" >
+            所属角色: <Run x:Name="RoleNameText" Text="{Binding Path=UserOfRole.Name}"></Run>
+        </TextBlock>
+
+        <TextBox x:Name="NoteText" Grid.Row="7" FontSize="18"
+    Style="{StaticResource MaterialDesignTextFieldBoxTextBox}"
+    wpf:HintAssist.Hint="备注"
+    VerticalAlignment="Top"
+    AcceptsReturn="True"
+    TextWrapping="Wrap"
+    MaxWidth="400" />
+
+        <StackPanel Orientation="Horizontal" Grid.Row="8" HorizontalAlignment="Center"
+                    Margin="0 16 0 0">
+            <Button x:Name="NewUserBtn" IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}" Margin="0,2,0,3" Height="Auto" Click="NewUserBtn_Click" 
+                     FontSize="22">
+                提交
+            </Button>
+            <Button IsCancel="True" Margin="8 0 0 0" Style="{DynamicResource MaterialDesignFlatButton}" FontSize="22"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
+                <Button.CommandParameter>
+                    <system:Boolean>False</system:Boolean>
+                </Button.CommandParameter>
+                取消
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

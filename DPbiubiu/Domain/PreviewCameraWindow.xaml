@@ -1,0 +1,124 @@
+﻿<Window x:Class="biubiu.Domain.PreviewCameraWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:local="clr-namespace:biubiu.Domain"
+        mc:Ignorable="d" Padding="5" Loaded="Window_Loaded"
+        Title="摄像头预览窗口" MinHeight="350" MinWidth="410" Width="1170">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="WindowsFormsHost">
+                <Setter Property="MinWidth" Value="368"/>
+                <Setter Property="MinHeight" Value="281"/>
+                <Setter Property="Margin" Value="5"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <WrapPanel>
+            <!--
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        -->
+
+            <StackPanel Grid.Row="0" Grid.Column="0">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd1_1" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>1号地磅--1号摄像头</TextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Row="0" Grid.Column="1">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd1_2" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>1号地磅--2号摄像头</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="2">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd1_3" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>1号地磅--3号摄像头</TextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Row="0" Grid.Column="3">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd2_1" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>2号地磅--1号摄像头</TextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="0">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd2_2" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>2号地磅--2号摄像头</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd2_3" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>2号地磅--3号摄像头</TextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="2">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd3_1" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>3号地磅--1号摄像头</TextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="3">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd3_2" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>3号地磅--2号摄像头</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="0">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd3_3" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>3号地磅--3号摄像头</TextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Grid.Column="1">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd4_1" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>4号地磅--1号摄像头</TextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Grid.Column="2">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd4_2" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>4号地磅--2号摄像头</TextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Grid.Column="3">
+                <WindowsFormsHost>
+                    <forms:PictureBox x:Name="RealPlayWnd4_3" BackColor="Gray" ></forms:PictureBox>
+                </WindowsFormsHost>
+                <TextBlock>4号地磅--3号摄像头</TextBlock>
+            </StackPanel>
+
+        </WrapPanel>
+    </ScrollViewer>
+</Window>

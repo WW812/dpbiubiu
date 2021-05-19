@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="biubiu.views.setting.adjust_weight.AdjustWeightPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:biubiu.views.setting.adjust_weight"
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="1000" d:DesignWidth="1900">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="ToolTip" Value="最多保留两位小数"/>
+                <Setter Property="Width" Value="60"/>
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel x:Name="MainArea">
+        <Border BorderBrush="#808080" BorderThickness="1" Margin="20" Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+                    <TextBlock>1号地磅: </TextBlock>
+                    <TextBox x:Name="P1"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                    <TextBlock>2号地磅: </TextBlock>
+                    <TextBox x:Name="P2"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
+                    <TextBlock>3号地磅: </TextBlock>
+                    <TextBox x:Name="P3"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3">
+                    <TextBlock>4号地磅: </TextBlock>
+                    <TextBox x:Name="P4"></TextBox>
+                </StackPanel>
+                <Button FontSize="18" Width="100" Margin="10" HorizontalAlignment="Right" Click="Button_Click" Grid.Row="1" Grid.Column="3">保存</Button>
+            </Grid>
+        </Border>
+
+        <Border BorderBrush="#808080" BorderThickness="1" Margin="20" Padding="20">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>单据矫正:</TextBlock>
+                <TextBox x:Name="TB_Print"></TextBox>
+                <Button FontSize="18" Width="100" Margin="10" HorizontalAlignment="Right" Click="Button_Click_2" Grid.Row="1" Grid.Column="3">保存</Button>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,154 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:domain="clr-namespace:biubiu.Domain"
+             xmlns:local="clr-namespace:biubiu.views.setting.device"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Converter="clr-namespace:biubiu.Converter"
+             xmlns:camera="clr-namespace:biubiu.views.setting.device.camera"
+             xmlns:system="clr-namespace:System"
+             x:Class="biubiu.views.setting.device.DevicePage"
+             mc:Ignorable="d" Unloaded="UserControl_Unloaded" Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Converter:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
+    </UserControl.Resources>
+
+    <DockPanel Background="White">
+        <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2" DockPanel.Dock="Left" Width="156" VerticalAlignment="Stretch" >
+            <ListBox x:Name="PondListBox"  SelectedIndex="0" SelectionChanged="PondListBox_SelectionChanged"
+                 ItemsSource="{Binding PondItems}" SelectedItem="{Binding CurrentPond}"
+                 DisplayMemberPath="Name" FontSize="20"/>
+        </materialDesign:Card>
+        <DockPanel>
+        <!--
+            <Grid.RowDefinitions>
+                <RowDefinition Height="280"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            -->
+
+            <!-- 地磅配置 -->
+            <materialDesign:Card Height="280" DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="16" Margin="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock FontSize="20"><Run Text="地磅设置"/></TextBlock>
+
+                    <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Right"><Run Text="表头类型:"/></TextBlock>
+                    <ComboBox x:Name="PondsTypeNameComboBox" Grid.Row="2" Grid.Column="2" FontSize="16" materialDesign:HintAssist.Hint="表头类型" materialDesign:HintAssist.HintOpacity=".26" 
+                              ItemsSource="{Binding PondsTypeNameItems}" SelectedItem="{Binding CurrentPond.PondTypeName}"
+                              IsEnabled="{Binding IsConnectionTest, Converter={StaticResource ReverseBooleanConverter}}"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Right"><Run Text="端口号:"/></TextBlock>
+                    <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
+                        <ComboBox FontSize="16" materialDesign:HintAssist.Hint="端口号" materialDesign:HintAssist.HintOpacity=".26" 
+                              ItemsSource="{Binding SerialPortItems}" SelectedItem="{Binding CurrentPond.COM}" ToolTip="当前连接的全部串口"
+                              IsEnabled="{Binding IsConnectionTest, Converter={StaticResource ReverseBooleanConverter}}"/>
+                        <TextBlock FontSize="14" Text="{Binding CurrentPond.COM}" ToolTip="当前地磅设置的串口号" VerticalAlignment="Bottom" Margin="20 0"/>
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Right"><Run Text="波特率:"/></TextBlock>
+                    <ComboBox Grid.Row="4" Grid.Column="2" FontSize="16" materialDesign:HintAssist.Hint="波特率" materialDesign:HintAssist.HintOpacity=".26" 
+                              SelectedItem="{Binding CurrentPond.Baudrate}" ItemsSource="{Binding BaudrateItems}"
+                              IsEnabled="{Binding IsConnectionTest, Converter={StaticResource ReverseBooleanConverter}}"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Right" Text="数据展示:" ></TextBlock>
+                    <StackPanel Grid.Row="5" Grid.Column="2"  Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold" Foreground="Red"  FontSize="20" VerticalAlignment="Bottom" Text="{Binding ShowData}" MinWidth="60"/>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding ConnectionTest}" VerticalAlignment="Bottom">
+                            <Run Text="{Binding TestBtnText}" />
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" 
+                                HorizontalAlignment="Center">
+                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}" IsChecked="{Binding CurrentPond.Enable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            启用
+                        </CheckBox>
+                        <Button Margin="8 0" Command="{Binding SaveCommand}" CommandParameter="True" Content="保存" >
+                        </Button>
+                        <TextBlock Foreground="Red" FontSize="16" Text="{Binding SaveWarningStr}" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+
+            <materialDesign:Snackbar x:Name="SnackbarOne" DockPanel.Dock="Bottom"
+         Message="{Binding MessageBar.Message}" IsActive="{Binding MessageBar.IsActive}"
+         HorizontalAlignment="Stretch"/>
+
+            <!-- 摄像头设置 -->
+            <materialDesign:Card VerticalAlignment="Stretch" Padding="16" Margin="8">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="10"/>
+                            <!--<RowDefinition Height="60"/>-->
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock FontSize="20"><Run Text="摄像/刻录机设置"/></TextBlock>
+
+                        <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0" />
+
+<!--
+                        <ComboBox x:Name="CameraMake" Grid.Row="2" Grid.Column="0" FontSize="18" materialDesign:HintAssist.Hint="摄像/刻录机品牌" materialDesign:HintAssist.HintOpacity=".26" Margin="0 10">
+                            <ComboBoxItem IsSelected="True" Content="海康威视"/>
+                        </ComboBox>
+
+                        <TextBlock Grid.Row="2" Grid.Column="1" FontSize="14" Text="抓拍已启用: 海康威视-硬盘刻录机" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                        -->
+
+                        <TabControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" SelectedIndex="{Binding SelectedTabIndex}" Margin="0 10">
+                            <TabItem Padding="4" FontSize="18">
+                                <TabItem.Header>
+                                    <TextBlock>海康威视硬盘刻录机</TextBlock>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <camera:Hikvision1Control x:Name="Hikvision1" CurrentPond="{Binding CurrentPond, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </TabItem.Content>
+                            </TabItem>
+                            <TabItem Padding="4" FontSize="18">
+                                <TabItem.Header>
+                                    <TextBlock>海康威视网络摄像头</TextBlock>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <camera:Hikvision2Control x:Name="Hikvision2" CurrentPond2="{Binding CurrentPond, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </TabItem.Content>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                </DockPanel>
+            </materialDesign:Card>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

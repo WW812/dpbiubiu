@@ -1,0 +1,104 @@
+﻿<Page x:Class="biubiu.views.finance.accept.AcceptPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:biubiu.views.finance.accept"
+      mc:Ignorable="d" Loaded="Page_Loaded"
+      xmlns:domain="clr-namespace:biubiu.Domain"
+      xmlns:biuCovert ="clr-namespace:biubiu.Converter"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AcceptPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <biuCovert:LongToDateTimeConverter x:Key="LongToDateTimeConverter"/>
+            <biuCovert:AcceptStatusToDescribeConverter x:Key="AcceptStatusToDescribeConverter" />
+        </ResourceDictionary>
+    </Page.Resources>
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10 20">
+            <TextBlock Text="承兑编号:" VerticalAlignment="Bottom" Margin="10 0" FontSize="20"/>
+            <TextBox x:Name="AcceptNumTextBox" materialDesign:HintAssist.Hint="承兑编号" Margin="10 0" FontSize="18" Width="200"></TextBox>
+            <TextBlock Text="承兑金额:" VerticalAlignment="Bottom" Margin="10 0" FontSize="20"></TextBlock>
+            <TextBox x:Name="AcceptMoneyTextBox" materialDesign:HintAssist.Hint="承兑金额" Margin="10 0" FontSize="18" Width="200"></TextBox>
+            <TextBlock Text="客户名称:" VerticalAlignment="Bottom" Margin="10 0" FontSize="20"></TextBlock>
+            <domain:SearchListBoxControl x:Name="CustomerSearchListBox" FontSize="20" Width="200" Margin="10 0"
+                 materialDesign:HintAssist.Hint="客户名称" materialDesign:HintAssist.HintOpacity=".26" 
+                 TextBoxBase.TextChanged="CustomerSearchListBox_TextChanged"/>
+            <Button Margin="10 0" Padding="5 0" FontSize="16" Click="Button_Click_1">查询</Button>
+            <Button Margin="10 0" Padding="5 0" FontSize="16" Click="Button_Click">重置</Button>
+        </StackPanel>
+        <domain:PageControl Margin="0 8 0 0" DockPanel.Dock="Bottom"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid Grid.Column="0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" FontSize="16"
+                      LoadingRow="DataGrid_LoadingRow" ItemsSource="{Binding AcceptItems}" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="序号">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGridRow}}, Path=Header}"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                   Margin="10,0,0,0"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="付款日期" Binding="{Binding Path=PayTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="承兑编号" Binding="{Binding Path=HonourNum}"></DataGridTextColumn> 
+                    <DataGridTextColumn Header="承兑金额" Binding="{Binding Path=Money}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="承兑到期日" Binding="{Binding Path=HonourTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd'}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="贴现扣款" Binding="{Binding Path=HonourDiscount}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="承兑状态" Binding="{Binding Path=HonourStatus,Converter={StaticResource AcceptStatusToDescribeConverter}}"></DataGridTextColumn> 
+                    <DataGridTextColumn Header="客户名称" Binding="{Binding Path=CusName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="录入时间" Binding="{Binding Path=CreateTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}"></DataGridTextColumn> 
+                    <DataGridTextColumn Header="备注" Binding="{Binding Path=Note}"></DataGridTextColumn>
+                    <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Width="60" Height="20" Padding="0" Margin="0" ToolTip="查看单据详情" Command="{Binding DataContext.RunEditAceeptCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding Path=.}"  Style="{DynamicResource MaterialDesignFlatButton}">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="Pencil"  Margin="0"/>
+                                        <TextBlock Margin="4 0 0 0" Text="修改"/>
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TreeView x:Name="StatusTreeView" Grid.Column="1" MinWidth="220" FontSize="16" SelectedItemChanged="TreeView_SelectedItemChanged">
+                <TreeViewItem Header="全部承兑" IsExpanded="True" Tag="-1" IsSelected="True">
+                    <TreeViewItem Header="未兑现" Tag="0"/>
+                    <TreeViewItem Header="已兑现" Tag="1"/>
+                    <TreeViewItem Header="已出账" Tag="2"/>
+                    <TreeViewItem Header="退还原主" Tag="3"/>
+                    <TreeViewItem Header="有问题" Tag="4"/>
+                    <TreeViewItem Header="兑换中" Tag="5"/>
+                    <TreeViewItem Header="到期承兑" Tag="6"/>
+                    <!--
+                    <TreeViewItem>
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="16" Height="16">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M20,10C22,13 17,22 15,22C13,22 13,21 12,21C11,21 11,22 9,22C7,22 2,13 4,10C6,7 9,7 11,8V5C5.38,8.07 4.11,3.78 4.11,3.78C4.11,3.78 6.77,0.19 11,5V3H13V8C15,7 18,7 20,10Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}" />
+                                    </Canvas>
+                                </Viewbox>
+                                <TextBlock Margin="8 0 0 0">
+          Apple
+                                </TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Banana" />
+                    -->
+                </TreeViewItem>
+            </TreeView>
+        </Grid>
+    </DockPanel>
+</Page>

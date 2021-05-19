@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="biubiu.views.marketing.stock_bill.StockBillPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:biubiu.views.marketing.stock_bill"
+             xmlns:domain="clr-namespace:biubiu.Domain"
+             xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:biuCovert ="clr-namespace:biubiu.Converter"
+             mc:Ignorable="d" Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <biuCovert:LongToDateTimeConverter x:Key="LongToDateTimeConverter"/>
+        <ContextMenu x:Key="ContextMenu">
+            <MenuItem FontSize="20" Header="批量修改" Command="{Binding RunEditOrdersForBillCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+        </ContextMenu>
+    </UserControl.Resources>
+
+    <DockPanel>
+        <Grid DockPanel.Dock="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <DataGrid DockPanel.Dock="Left" x:Name="BillsDataGrid" Margin="10" IsReadOnly="True" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" FontSize="15" LoadingRow="DataGrid_LoadingRow"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding BillsItems}" SelectedItem="{Binding SelectedBill}"
+                          SelectionChanged="DataGrid_SelectionChanged" SelectionUnit="FullRow" ContextMenu="{StaticResource ContextMenu}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="序号" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGridRow}}, Path=Header}"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                   Margin="10 0 0 0"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="总单数" Binding="{Binding Path=Count}"/>
+                    <DataGridTextColumn Header="总吨数" Binding="{Binding Path=Weight}"/>
+                    <DataGridTextColumn Header="总金额" Binding="{Binding Path=Money}"/>
+                    <DataGridTextColumn Header="交账时间" Binding="{Binding Path=CreateTime, Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}"/>
+                    <DataGridTextColumn Header="交账人" Binding="{Binding Path=CreateUserName}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <domain:PageControl Margin="10 0" Grid.Row="1"/>
+        </Grid>
+
+        <Grid Margin="0 10 10 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="500"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <WindowsFormsHost>
+                <rv:ReportViewer x:Name="BillReportViewer"/>
+            </WindowsFormsHost>
+
+            <DataGrid Grid.Row="2" IsReadOnly="True" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" FontSize="15"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding OrderItems}"
+                              ScrollViewer.ScrollChanged="DataGrid_ScrollChanged" Height="400" Margin="0 10 0 0" SelectionUnit="FullRow"
+                      LoadingRow="DataGrid_LoadingRow_1">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="订单号" Binding="{Binding Path=OrderNo}" />
+                    <DataGridTextColumn Header="车号" FontSize="18" FontWeight="Bold"  Binding="{Binding Path=CarId}" />
+                    <DataGridTextColumn Header="客户名称" Binding="{Binding Path=Customer.Name}" />
+                    <DataGridTextColumn Header="毛重" Binding="{Binding Path=CarGrossWeight}" />
+                    <DataGridTextColumn Header="皮重" Binding="{Binding Path=CarTare}" />
+                    <DataGridTextColumn Header="净重" Binding="{Binding Path=CarNetWeight}" />
+                    <DataGridTextColumn Header="料品名称" Binding="{Binding Path=Goods.Name}" />
+                    <DataGridTextColumn Header="执行单价" Binding="{Binding Path=GoodsRealPrice}" />
+                    <DataGridTextColumn Header="实收金额" Binding="{Binding Path=RealMoney}" />
+                    <!--
+                            <DataGridTextColumn Header="进厂时间" FontSize="14"  Binding="{Binding Path=EnterTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}"/>
+                            <DataGridTextColumn Header="进厂司磅员" Binding="{Binding Path=EnterUser.NickName}" />
+                            -->
+                    <DataGridTextColumn Header="出厂时间" FontSize="14"  Binding="{Binding Path=ExitTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" />
+                    <DataGridTextColumn Header="出厂司磅员" Binding="{Binding Path=ExitUser.NickName}" />
+                    <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Width="60" Height="20" Padding="0" Margin="0" ToolTip="查看单据详情" Command="{Binding DataContext.RunOrderDetailsCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding Path=.}"  Style="{DynamicResource MaterialDesignFlatButton}">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <wpf:PackIcon VerticalAlignment="Center" Kind="EyeOutline"  Margin="0"/>
+                                        <TextBlock Margin="4, 0, 0,0" Text="详情"/>
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DockPanel>
+</UserControl>
