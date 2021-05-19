@@ -1,0 +1,412 @@
+﻿<UserControl x:Class="biubiu.views.marketing.ship_order.ShipOrderPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:biubiu.views.marketing.ship_order"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+             xmlns:domain="clr-namespace:biubiu.Domain"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:vm ="clr-namespace:biubiu.view_model"
+             xmlns:md="clr-namespace:biubiu.model.ship_goods"
+             xmlns:biuCovert ="clr-namespace:biubiu.Converter"
+             xmlns:softKeyBoard ="clr-namespace:biubiu.Domain.softKeyBoard"
+             mc:Ignorable="d" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="validationTemplate">
+            <Grid>
+                <AdornedElementPlaceholder/>
+            </Grid>
+        </ControlTemplate>
+        <biuCovert:IntToBooleanConverter x:Key="IntToBooleanConverter"/>
+        <biuCovert:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
+        <materialDesignConverters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" TrueValue="Visible" FalseValue="Hidden" />
+        <materialDesignConverters:BooleanToVisibilityConverter x:Key="ReverseInvertedBooleanToVisibilityConverter" TrueValue="Hidden" FalseValue="Visible" />
+        <biuCovert:OrderStatusToSubmitButtonTextConverter x:Key="OrderStatusToSubmitButtonTextConverter"/>
+        <biuCovert:LongToDateTimeConverter x:Key="LongToDateTimeConverter"/>
+
+        <ContextMenu x:Key="ContextMenu">
+            <MenuItem FontSize="20" Header="修改单据" Command="{Binding RunOrderDetailsCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+            <MenuItem FontSize="20" Header="补印票据" Command="{Binding MendPrintBillCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+            <MenuItem FontSize="20" Header="作废单据" Command="{Binding DeleteShipOrderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+        </ContextMenu>
+
+        <Style TargetType="ItemsControl" x:Key="GoodsItemsControl">
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <WrapPanel IsItemsHost="True" Width="568"></WrapPanel>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBlock"  x:Key="CTextBlock">
+            <Setter Property="FontSize" Value="22"/>
+        </Style>
+
+        <Style x:Key="UserItemContainerStyle" TargetType="ListViewItem">
+            <Style.Resources>
+                <!--SelectedItem with focus-->
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightBlue" Opacity=".4"/>
+                <!--SelectedItem without focus-->
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="LightBlue" Opacity=".4"/>
+            </Style.Resources>
+            <!-- 设置触发器 -->
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="Background" Value="Coral"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <DockPanel>
+            <!-- 左侧操作面板-->
+            <StackPanel x:Name="LeftStackPanel" DockPanel.Dock="Left">
+                <!-- 重量操作区域-->
+                <!--<wpf:Card wpf:ShadowAssist.ShadowDepth="Depth2" Padding="16" Margin="8 8 8 4" MaxWidth="680">-->
+                <Border BorderThickness="1" BorderBrush="#FFACACAC" ClipToBounds="True" Background="White" Padding="12" Margin="0 0 8 0">
+                    <StackPanel>
+                        <ListView x:Name="PondListBox" Visibility="Collapsed" SelectedItem="{Binding CurrentPonderationDisplay}" ItemsSource="{Binding PonderDisplayItems}" SelectionMode="Single" Height="126">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="{Binding Path=Height}" Width="{Binding Path=Width}" Background="{Binding Path=Background}" MouseDown="Grid_MouseDown">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="70"/>
+                                            <RowDefinition Height="30"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="115"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock  Grid.Row="0" Grid.Column="0"  FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Right"  FontWeight="Bold" Foreground="Red" Margin="3" Text="{Binding Path=Weight}"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="18" Foreground="White" Margin="3" HorizontalAlignment="Center" Text="{Binding Path=Name}"/>
+                                        <Image Grid.Row="0" Grid.Column="1" Visibility="{Binding Path=IsStability,Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}" Source="/biubiu;component/Resources/redLight.png" ToolTip="数据不稳定" Margin="4 0" Height="20" Width="20" />
+                                        <Image Grid.Row="0" Grid.Column="1" Visibility="{Binding Path=IsError, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" Source="/biubiu;component/Resources/redLight.png"  ToolTip="地磅连接出错" Margin="4 0" Height="20" Width="20" />
+                                        <Image Grid.Row="1" Grid.Column="1" Visibility="{Binding Path=IsStability, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" Source="/biubiu;component/Resources/greenLight.png" ToolTip="数据稳定" Margin="4 0" Height="20" Width="20"/>
+                                        <Image Grid.Row="1" Grid.Column="1" Visibility="{Binding Path=IsError, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" Source="/biubiu;component/Resources/greenLight.png" ToolTip="地磅连接出错" Margin="4 0" Height="20" Width="20"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <!-- 毛 皮 净 -->
+                        <Grid Margin="0 16 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="60"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">皮 重</TextBlock>
+                            <TextBox Grid.Row="1" Grid.Column="1" Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" Text="{Binding Order.CarTare}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">毛 重</TextBlock>
+                            <TextBox Grid.Row="1" Grid.Column="0" Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" Text="{Binding Order.CarGrossWeight}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">净 重</TextBlock>
+                            <TextBox Grid.Row="1" Grid.Column="2" Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" Text="{Binding Order.CarNetWeight}"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <!--</wpf:Card>-->
+                <!-- 单据操作区域-->
+                <!--<wpf:Card wpf:ShadowAssist.ShadowDepth="Depth2" Padding="24,16" Margin="8 8 8 4" MaxWidth="680">-->
+                <Border BorderThickness="1" BorderBrush="#FFACACAC" ClipToBounds="True" Background="White" Padding="24 16" Margin="0 8 8 0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="24"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="24"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="24"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="24"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="24"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="0"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="28"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="24"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="79"/>
+                            <ColumnDefinition Width="79"/>
+                            <ColumnDefinition Width="79"/>
+                            <ColumnDefinition Width="79"/>
+                            <ColumnDefinition Width="79"/>
+                            <ColumnDefinition Width="79"/>
+                            <ColumnDefinition Width="79"/>
+                            <ColumnDefinition Width="79"/>
+                        </Grid.ColumnDefinitions>
+
+                        <domain:SearchListBoxControl x:Name="CarIdComboBox2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"
+                             wpf:HintAssist.Hint="输入车牌号" wpf:HintAssist.HintOpacity=".26"  Width="474"
+                             TextBoxBase.TextChanged="CarIdComboBox_TextChanged" FontSize="24"/>
+
+                        <Button x:Name="KeyBoardBtn" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="3" Width="80"  FontSize="12" Padding="8,4" HorizontalAlignment="Center" Click="KeyBoardBtn_Click">
+                            <wpf:PackIcon HorizontalAlignment="Center" Kind="KeyboardVariant" Width="80" Height="24"/>
+                        </Button>
+                        <Popup x:Name="SoftKeyBoardPopup" StaysOpen="False" PlacementTarget="{Binding ElementName=KeyBoardBtn}"
+                               IsOpen="{Binding SoftKeyboardIsOpen}" >
+                            <softKeyBoard:SoftKeyBoard Margin="0"/>
+                        </Popup>
+
+                        <ToggleButton x:Name="CustomerTogBtn" Style="{StaticResource MaterialDesignActionToggleButton}"
+                                  ToolTip="当前为零售单据" Width="46" Height="46" Checked="CustomerTogBtn_Checked" Unchecked="CustomerTogBtn_Unchecked"
+                                  IsChecked="{Binding Order.CustomerType, Converter={StaticResource IntToBooleanConverter}}"
+                                  Grid.Row="2" Grid.Column="0">
+                            <ToggleButton.Content>
+                                <TextBlock FontWeight="Bold" FontSize="32">零</TextBlock>
+                            </ToggleButton.Content>
+                            <wpf:ToggleButtonAssist.OnContent>
+                                <TextBlock FontWeight="Bold" FontSize="32">客</TextBlock>
+                            </wpf:ToggleButtonAssist.OnContent>
+                        </ToggleButton>
+
+                        <domain:SearchListBoxControl x:Name="CustomerComboBox2" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5"
+                             wpf:HintAssist.Hint="输入客户名称" wpf:HintAssist.HintOpacity=".26" HorizontalAlignment="Stretch"
+                             FontSize="24" TextBoxBase.TextChanged="CustomerComboBox2_TextInput" Width="395"/>
+
+                        <TextBlock IsEnabled="{Binding IsChecked, ElementName=CustomerTogBtn}" Grid.Row="2" FontSize="22" 
+                               Grid.Column="6" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   SizeChanged="TextBlock_SizeChanged">
+                        余额: <Run x:Name="BalanceRun" FontWeight="Bold" Foreground="#FFFF0202" Text="{Binding Order.Customer.Balance}" 
+                                 ToolTip="{Binding Order.Customer.Balance}"/>元
+                        </TextBlock>
+
+                        <ItemsControl x:Name="GoodsListView"  Style="{StaticResource GoodsItemsControl}" ItemsSource="{Binding GoodsItems}"
+                            Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="8" Margin="0,8" HorizontalAlignment="Left" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type md:ShipGoods}">
+                                    <wpf:Chip Content="{Binding Name}" Margin="4" FontSize="24" 
+                                          FontWeight="Normal" Height="36" Click="Chip_Click"
+                                          Tag="{Binding Path=.}" Background="#FFE8E8E8">
+                                    </wpf:Chip>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="8">
+                            <TextBlock Style="{StaticResource CTextBlock}" HorizontalAlignment="Left" Width="200">标准单价: <Run Text="{Binding Order.GoodsPrice}"/></TextBlock>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"  Width="200">
+                                <TextBlock Style="{StaticResource CTextBlock}"  Margin="4,0">执行单价:</TextBlock>
+                                <TextBox x:Name="GoodsRealPriceTextBox" Margin="4,-8,4,4" MinWidth="50" MaxWidth="90" FontSize="22"
+                                 Text="{Binding Order.GoodsRealPrice}" PreviewTextInput="TextBox_PreviewTextInput"
+                                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False"
+                                 LostFocus="TextBox_LostFocus" TextChanged="TextBox_TextChanged" MaxLength="10"
+                                 GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"  Width="200">
+                                <TextBlock Style="{StaticResource CTextBlock}" Margin="4,0">预装吨数:</TextBlock>
+                                <TextBox Text="{Binding Order.AdvanceWeight}" Margin="4,-8,4,4" 
+                                 PreviewTextInput="TextBox_PreviewTextInput" MinWidth="50" MaxWidth="90" FontSize="22"
+                                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False" MaxLength="10"
+                                 LostFocus="TextBox_LostFocus" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="8">
+                            <TextBlock Style="{StaticResource CTextBlock}"  Width="200"
+                               Visibility="{Binding Order.Status, Converter={StaticResource IntToVisibilityConverter}}" HorizontalAlignment="Left">
+                            应收金额:  <Run Text="{Binding Order.OrderMoney}"/></TextBlock>
+
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding Order.Status, Converter={StaticResource IntToVisibilityConverter}}"
+                                    HorizontalAlignment="Left" Width="200">
+                                <TextBlock Style="{StaticResource CTextBlock}" Margin="4,0">优惠金额:</TextBlock>
+                                <TextBox x:Name="DiscountMoneyTextBox" Text="{Binding Order.DiscountMoney}" Margin="4,-8,4,4" MaxLength="10"
+                                 PreviewTextInput="TextBox_PreviewTextInput" TextChanged="TextBox_TextChanged" MinWidth="50" MaxWidth="90" FontSize="22"
+                                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False"
+                                 LostFocus="TextBox_LostFocus" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"/>
+                            </StackPanel>
+
+                            <TextBlock Style="{StaticResource CTextBlock}" Width="200"
+                               Visibility="{Binding Order.Status, Converter={StaticResource IntToVisibilityConverter}}"
+                               HorizontalAlignment="Left" Margin="4,0,0,0">实收金额: 
+                        <Run Foreground="Red" FontWeight="Bold" Text="{Binding Order.RealMoney}"/></TextBlock>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="8">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"  Width="200" Visibility="{Binding Order.Status, Converter={StaticResource IntToVisibilityConverter}}" >
+                                <TextBlock Style="{StaticResource CTextBlock}" Margin="4,0">方量:</TextBlock>
+                                <TextBox Text="{Binding Order.Cubic}" Margin="4,-8,4,4" 
+                                 PreviewTextInput="TextBox_PreviewTextInput" MinWidth="50" MaxWidth="90" FontSize="22"
+                                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False" MaxLength="10"
+                                 LostFocus="TextBox_LostFocus" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <TextBox wpf:HintAssist.Hint="备注" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" 
+                        Margin="0 8 0 0" FontSize="20" Grid.Row="12"  Grid.Column="0" Grid.ColumnSpan="8" Text="{Binding Order.Note}"/>
+
+                        <Button Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="2" Width="120" Height="40" Click="Button_Click"
+                            Command="{Binding SubmitOrderCommand}" IsEnabled="{Binding RequestStatus.IsAllComplete}" HorizontalAlignment="Right">
+                            <TextBlock FontSize="18" Text="{Binding Order.Status,Converter={StaticResource OrderStatusToSubmitButtonTextConverter},ConverterParameter=0}"/>
+                        </Button>
+                        <CheckBox Grid.Row="14" Grid.Column="4" Grid.ColumnSpan="2" ToolTip="勾选之后该单据变为空车出厂" Margin="8,4"
+                              Style="{StaticResource MaterialDesignCheckBox}" Content="空车出厂" VerticalAlignment="Bottom"
+                              HorizontalAlignment="Right" FontSize="14" Visibility="{Binding Order.Status,Converter={StaticResource IntToVisibilityConverter}}"
+                              IsChecked="{Binding Order.EmptyCar, Converter={StaticResource IntToBooleanConverter}}"/>
+                        <Button Grid.Row="14" Grid.Column="6" Grid.ColumnSpan="2"  x:Name="ResetButton" 
+                            Click="ResetButton_Click" Width="40" Height="40" Padding="0"
+                            Style="{DynamicResource MaterialDesignFlatButton}" IsEnabled="{Binding RequestStatus.IsAllComplete}"
+                            ToolTip="刷新操作面板">
+                            <wpf:PackIcon Margin="0" Height="Auto" Width="Auto" Kind="Refresh"/>
+                        </Button>
+                    </Grid>
+                </Border>
+                <!--</wpf:Card>-->
+            </StackPanel>
+
+            <!-- 单据面板-->
+            <!--<StackPanel>-->
+            <!--<wpf:Card wpf:ShadowAssist.ShadowDepth="Depth2" Padding="16" Margin="4 8 4 0">-->
+            <Border BorderThickness="1" BorderBrush="#FFACACAC" ClipToBounds="True" Background="White" Padding="16 16 16 4">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="54"/>
+                        <RowDefinition Height="784"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <!-- the following based on https://material.io/guidelines/components/buttons.html#buttons-toggle-buttons -->
+                    <ListBox x:Name="MenuBtn" Style="{StaticResource MaterialDesignToolToggleListBox}" Grid.Row="0" IsEnabled="{Binding OrderListBoxIsEnabled}"  wpf:ListBoxAssist.IsToggle="False"
+                         SelectedIndex="{Binding MenuIndex}" FontSize="22" HorizontalAlignment="Center" SelectionChanged="ListBox_SelectionChanged" SelectionMode="Single">
+                        <ListBoxItem x:Name="EnterShowButton">
+                            未结账
+                            <!--<wpf:PackIcon Kind="FormatAlignLeft"/>-->
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="ExitShowButton">
+                            已结账
+                            <!--<wpf:PackIcon Kind="FormatAlignCenter"/>-->
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="EmptyShowButton">
+                            空车出厂
+                            <!--<wpf:PackIcon Kind="FormatAlignRight"/>-->
+                        </ListBoxItem>
+                    </ListBox>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Button ToolTip="打开摄像头窗口" Visibility="Collapsed" FontSize="16" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding RunPreviewCameraWindowCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <wpf:PackIcon Kind="Camera" VerticalAlignment="Center"/>
+                                <TextBlock Margin="4 0 0 0" Text="查看录像"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button ToolTip="打开补单窗口" FontSize="16" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding RunShipOrderMendPageCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <wpf:PackIcon Kind="FileDocument" VerticalAlignment="Center"/>
+                                <TextBlock Margin="4 0 0 0" Text="手工补单"/>
+                            </StackPanel>
+                        </Button>
+
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Border Background="White" MaxHeight="30" BorderThickness="1" BorderBrush="#FFACACAC" CornerRadius="3" ToolTip="输入车牌号，检索单据" Margin="0 0 60 0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button Style="{DynamicResource MaterialDesignToolButton}" 
+                                Command="{Binding SearchOrderByCarIDCommand}" x:Name="SearchButton"
+                                CommandParameter="{Binding ElementName=SearchOrderTextBox, Path=Text}"
+                                Height="24" Width="24" ToolTip="点击检索">
+                                    <wpf:PackIcon Kind="Magnify" Opacity=".56" />
+                                </Button>
+                                <!--
+                                    <TextBox Grid.Column="1" Margin="5 0 0 0" KeyDown="Search_OnKeyDown"
+                             wpf:HintAssist.Hint="Search" x:Name="SearchBox"
+                             wpf:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0"
+                             MinWidth="200" VerticalAlignment="Center" />
+                             -->
+                                <!--Style="{StaticResource MaterialDesignFloatingHintTextBox}"-->
+                                <TextBox x:Name="SearchOrderTextBox" wpf:HintAssist.Hint="输入车号" KeyDown="SearchOrderTextBox_KeyDown"
+                                     VerticalAlignment="Center" FontSize="16" Width="90" MaxWidth="90" MaxLength="10"
+                                     Text="{Binding CarIDSearchFeed,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Grid.Column="1" Margin="5 0" wpf:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" />
+                            </Grid>
+                        </Border>
+
+                        <Button ToolTip="出料交账" FontSize="16" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding RunReferBillWindowCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <wpf:PackIcon Kind="ArrowUpBoldBoxOutline" VerticalAlignment="Center"/>
+                                <TextBlock Margin="4 0 0 0" Text="出料交账"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- 为DataGridColumn 提供数据源 -->
+                    <FrameworkElement x:Name="ColumnsVisibility" />
+
+                    <!-- 全部字段-->
+                    <DataGrid x:Name="EnterDataGrid" Margin="0 8 0 0" ItemsSource="{Binding OrdersItems}" Grid.Row="1" IsReadOnly="True"  SelectedItem="{Binding CurrentEnterOrder}"
+                        CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" FontSize="16" SelectionChanged="EnterDataGrid_SelectionChanged" 
+                        LoadingRow="EnterDataGrid_LoadingRow" ScrollViewer.ScrollChanged="EnterDataGrid_ScrollChanged" ContextMenu="{StaticResource ContextMenu}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto" Width="1196">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="编号"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=EnterOrderNo}" Visibility="{Binding DataContext.ColumnsVisibility.EnterOrderNoVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="订单号" Binding="{Binding Path=OrderNo}" Visibility="{Binding DataContext.ColumnsVisibility.OrderNoVisibility, Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="客户名称" Binding="{Binding Path=Customer.Name}" Visibility="{Binding DataContext.ColumnsVisibility.CustomerNameVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="车号" FontSize="18" FontWeight="Bold"  Binding="{Binding Path=CarId}" Visibility="{Binding DataContext.ColumnsVisibility.CarIdVisibility, Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="毛重" Binding="{Binding Path=CarGrossWeight}" Visibility="{Binding DataContext.ColumnsVisibility.CarGrossWeightVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="皮重" Binding="{Binding Path=CarTare}" Visibility="{Binding DataContext.ColumnsVisibility.CarTareVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="净重" Binding="{Binding Path=CarNetWeight}" Visibility="{Binding DataContext.ColumnsVisibility.CarNetWeightVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="料品名称" Binding="{Binding Path=Goods.Name}" Visibility="{Binding DataContext.ColumnsVisibility.GoodsNameVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="标准单价" Binding="{Binding Path=GoodsPrice}" Visibility="{Binding DataContext.ColumnsVisibility.GoodsPriceVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="执行单价" Binding="{Binding Path=GoodsRealPrice}" Visibility="{Binding DataContext.ColumnsVisibility.GoodsRealPriceVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="应收金额" Binding="{Binding Path=OrderMoney}" Visibility="{Binding DataContext.ColumnsVisibility.OrderMoneyVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="优惠金额" Binding="{Binding Path=DiscountMoney}" Visibility="{Binding DataContext.ColumnsVisibility.DiscountMoneyVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="实收金额" Binding="{Binding Path=RealMoney}" Visibility="{Binding DataContext.ColumnsVisibility.RealMoneyVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="方量" Binding="{Binding Path=Cubic}" Visibility="{Binding DataContext.ColumnsVisibility.CubicVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="进厂时间" FontSize="14"  Binding="{Binding Path=EnterTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" Visibility="{Binding DataContext.ColumnsVisibility.EnterTimeVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="进厂司磅员" Binding="{Binding Path=EnterUser.NickName}" Visibility="{Binding DataContext.ColumnsVisibility.EnterUserVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="进厂地磅号" Binding="{Binding Path=EnterPonderation}" Visibility="{Binding DataContext.ColumnsVisibility.EnterPonderationVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="出厂时间" FontSize="14"  Binding="{Binding Path=ExitTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" Visibility="{Binding DataContext.ColumnsVisibility.ExitTimeVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="出厂司磅员" Binding="{Binding Path=ExitUser.NickName}" Visibility="{Binding DataContext.ColumnsVisibility.ExitUserVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="出厂地磅号" Binding="{Binding Path=ExitPonderation}" Visibility="{Binding DataContext.ColumnsVisibility.ExitPonderationVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="修改人" Binding="{Binding Path=EditUser.NickName}" Visibility="{Binding DataContext.ColumnsVisibility.EditUserVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="修改时间" FontSize="14" Binding="{Binding Path=EditTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" Visibility="{Binding DataContext.ColumnsVisibility.EditTimeVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="修改原因" Binding="{Binding Path=EditReason}" Visibility="{Binding DataContext.ColumnsVisibility.EditReasonVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="修改备注" Binding="{Binding Path=EditNote}" Visibility="{Binding DataContext.ColumnsVisibility.EditNoteVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTextColumn Header="备注" Binding="{Binding Path=Note}" Visibility="{Binding DataContext.ColumnsVisibility.NoteVisibility,  Source={x:Reference ColumnsVisibility}}"/>
+                            <DataGridTemplateColumn Header="操作" Width="Auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Width="60" Height="20" Padding="0" Margin="0" ToolTip="查看单据详情" Command="{Binding DataContext.RunOrderDetailsCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding Path=.}" Style="{DynamicResource MaterialDesignFlatButton}">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <wpf:PackIcon VerticalAlignment="Center" Kind="EyeOutline"  Margin="0"/>
+                                                <TextBlock Margin="4 0 0 0" Text="详情"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!--<domain:PageControl Margin="0 8 0 0" Grid.Row="2"/>-->
+                    <TextBlock Margin="0 4 0 0" Grid.Row="2" FontSize="20" Text="{Binding DetailOrderStr}"/>
+                </Grid>
+            </Border>
+            <!--</wpf:Card>-->
+            <!--</StackPanel>-->
+        </DockPanel>
+    </ScrollViewer>
+</UserControl> 

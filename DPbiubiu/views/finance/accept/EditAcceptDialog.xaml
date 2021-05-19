@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="biubiu.views.finance.accept.EditAcceptDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:biubiu.views.finance.accept"
+             mc:Ignorable="d" Loaded="UserControl_Loaded"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="validationTemplate">
+            <Grid>
+                <AdornedElementPlaceholder/>
+            </Grid>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid Margin="16" Width="400">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock FontSize="26" Grid.Column="0" Grid.ColumnSpan="2">修改承兑</TextBlock>
+        <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="承兑编号:" FontSize="22" Margin="0 0 10 0" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="NumTextBox" Grid.Row="2" Grid.Column="1" FontSize="22" Margin="0 0 0 10" VerticalAlignment="Bottom"/>
+        <TextBlock Text="承兑到期日:" Grid.Row="3" Grid.Column="0" FontSize="22" Margin="0 0 10 0" VerticalAlignment="Bottom"/>
+        <DatePicker x:Name="AcceptDate" Grid.Row="3" Grid.Column="1" Language="zh-CN" Margin="0 0 0 10" FontSize="22" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Bottom"/>
+        <TextBlock Text="承兑状态:" Grid.Row="4" Grid.Column="0" FontSize="22" Margin="0 0 10 0" VerticalAlignment="Bottom"/>
+        <ComboBox x:Name="StatusComboBox" Grid.Row="4" Grid.Column="1" FontSize="22" Margin="0 0 0 10" VerticalAlignment="Bottom">
+            <ComboBoxItem Tag="0">未兑现</ComboBoxItem>
+            <ComboBoxItem Tag="1">已兑现</ComboBoxItem>
+            <ComboBoxItem Tag="2">已出账</ComboBoxItem>
+            <ComboBoxItem Tag="3">退还原主</ComboBoxItem>
+            <ComboBoxItem Tag="4">有问题</ComboBoxItem>
+            <ComboBoxItem Tag="5">兑换中</ComboBoxItem>
+            <ComboBoxItem Tag="6">到期承兑</ComboBoxItem>
+        </ComboBox>
+        <TextBlock Text="备注:" Grid.Row="5" Grid.Column="0" FontSize="22" Margin="0 0 10 0" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="NoteTextBox" Grid.Row="5" Grid.Column="1" FontSize="22" Margin="0 0 0 10" VerticalAlignment="Bottom"/>
+        <Separator Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0" />
+        <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 16 0 0" HorizontalAlignment="Center">
+            <Button  x:Name="SubmitBtn" IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}" 
+                     Content="提交" FontSize="22" Click="SubmitBtn_Click"/>
+            <Button x:Name="CancleBtn" IsCancel="True" Margin="8 0 0 0" Style="{DynamicResource MaterialDesignFlatButton}" FontSize="22"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Content="取消">
+                <Button.CommandParameter>
+                    <system:Boolean>False</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

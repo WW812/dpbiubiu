@@ -1,0 +1,24 @@
+﻿<Window x:Class="biubiu.views.setting.print.PreviewBillTemplateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:biubiu.views.setting.print"
+        xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="PreviewBillTemplateWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <WindowsFormsHost Grid.Column="0" Margin="8">
+            <rv:ReportViewer  x:Name="PreviewReportViewer"/>
+        </WindowsFormsHost>
+
+        <Button Grid.Row="1" IsCancel="True" Margin="10" Style="{DynamicResource MaterialDesignFlatButton}" 
+                    Click="Button_Click"  Content="关闭" FontSize="18">
+        </Button>
+    </Grid>
+</Window>

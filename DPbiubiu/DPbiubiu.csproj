@@ -1,0 +1,1120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{069D87D7-2307-48F9-A3AD-E6C2385781C4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>biubiu</RootNamespace>
+    <AssemblyName>biubiu</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>C:\Users\diu\Desktop\安装\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://39.104.200.66/</InstallUrl>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.html</WebPage>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>0.0.0.8</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>D72EDC4ECF1449E9D347514775A3F550162C22F7</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>biubiu_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+    <DebugType>none</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoUpdater.NET, Version=1.5.1.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autoupdater.NET.Official.1.5.1\lib\net40\AutoUpdater.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="BenchmarkDotNet, Version=0.11.3.0, Culture=neutral, PublicKeyToken=aa0ca2f9092cefc4, processorArchitecture=MSIL">
+      <HintPath>..\packages\BenchmarkDotNet.0.11.3\lib\net46\BenchmarkDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="CommandLine, Version=2.3.0.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.2.3.0\lib\net45\CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=1.2.0.42979, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis, Version=2.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.2.9.0\lib\netstandard1.3\Microsoft.CodeAnalysis.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=2.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.2.9.0\lib\netstandard1.3\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DotNet.PlatformAbstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.DotNet.PlatformAbstractions.2.1.0\lib\net45\Microsoft.DotNet.PlatformAbstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.1.0.0\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.4.5.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Qiniu.7.3.1.1\lib\Net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Qiniu, Version=7.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Qiniu.7.3.1.1\lib\Net40\Qiniu.dll</HintPath>
+    </Reference>
+    <Reference Include="QRCoder, Version=1.3.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.3.5\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="ShowMeTheXAML, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ShowMeTheXAML.1.0.12\lib\net45\ShowMeTheXAML.dll</HintPath>
+    </Reference>
+    <Reference Include="ShowMeTheXAML.AvalonEdit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ShowMeTheXAML.AvalonEdit.1.0.12\lib\net45\ShowMeTheXAML.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.110.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.3.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.FileVersionInfo, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.FileVersionInfo.4.3.0\lib\net46\System.Diagnostics.FileVersionInfo.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Diagnostics.StackTrace, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.StackTrace.4.3.0\lib\net46\System.Diagnostics.StackTrace.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.4.5.0\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.0\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Reflection.Metadata, Version=1.4.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.1.6.0\lib\netstandard2.0\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.TypeExtensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.TypeExtensions.4.1.0\lib\net46\System.Reflection.TypeExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.AccessControl, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.4.5.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.4.5.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.4.3.0\lib\net46\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Thread.4.3.0\lib\net46\System.Threading.Thread.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XmlDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XmlDocument.4.3.0\lib\net46\System.Xml.XmlDocument.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XPath, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XPath.4.3.0\lib\net46\System.Xml.XPath.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XPath.XDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XPath.XDocument.4.3.0\lib\net46\System.Xml.XPath.XDocument.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XPath.XmlDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XPath.XmlDocument.4.3.0\lib\net46\System.Xml.XPath.XmlDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WebApiClient.JIT, Version=1.0.8.0, Culture=neutral, PublicKeyToken=96ac13f3a45093d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApiClient.JIT.1.0.8\lib\net46\WebApiClient.JIT.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Config.cs" />
+    <Compile Include="Converter\ReverseBooleanConverter.cs" />
+    <Compile Include="Domain\AnotherCommandImplementation.cs" />
+    <Compile Include="Domain\BillPrinter.cs" />
+    <Compile Include="Domain\biuMessageBox\BiuMessageBoxButton.cs" />
+    <Compile Include="Domain\biuMessageBox\BiuMessageBoxImage.cs" />
+    <Compile Include="Domain\biuMessageBox\BiuMessageBoxResult.cs" />
+    <Compile Include="Domain\biuMessageBox\BiuMessageBoxWindows.xaml.cs">
+      <DependentUpon>BiuMessageBoxWindows.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\CHCNetSDK.cs" />
+    <Compile Include="Domain\Common.cs" />
+    <Compile Include="Domain\Encoder.cs" />
+    <Compile Include="Domain\EventCenter.cs" />
+    <Compile Include="Domain\GetAllDataStatus.cs" />
+    <Compile Include="Domain\HikvisionHelper.cs" />
+    <Compile Include="Domain\INIClass.cs" />
+    <Compile Include="Domain\pages\PageControl.xaml.cs">
+      <DependentUpon>PageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\pages\PageModel.cs" />
+    <Compile Include="Domain\PonderationHelper.cs" />
+    <Compile Include="Domain\PreviewCameraWindow.xaml.cs">
+      <DependentUpon>PreviewCameraWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\RegexChecksum.cs" />
+    <Compile Include="Domain\SearchListBoxControl.xaml.cs">
+      <DependentUpon>SearchListBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\SnackbarViewModel.cs" />
+    <Compile Include="Domain\Snapshot.cs" />
+    <Compile Include="Domain\softKeyBoard\SoftKeyBoard.xaml.cs">
+      <DependentUpon>SoftKeyBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\SQLiteHelper.cs" />
+    <Compile Include="Domain\TimePicker.xaml.cs">
+      <DependentUpon>TimePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FactoryService\StoneProduce\CarGroupOperateDialog.xaml.cs">
+      <DependentUpon>CarGroupOperateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FactoryService\StoneProduce\CarOperateDialog.xaml.cs">
+      <DependentUpon>CarOperateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FactoryService\StoneProduce\StoneProducePage.xaml.cs">
+      <DependentUpon>StoneProducePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FactoryService\StoneProduce\StoneProduceViewModel.cs" />
+    <Compile Include="model\bill\BillDetailsModel.cs" />
+    <Compile Include="model\bill\BillModel.cs" />
+    <Compile Include="model\customer\ship-customer\ShipCustomerSettle.cs" />
+    <Compile Include="model\customer\ship-customer\ShipCustomerSettleDetail.cs" />
+    <Compile Include="model\FactoryService\StoneCarGroupModel.cs" />
+    <Compile Include="model\FactoryService\StoneCarModel.cs" />
+    <Compile Include="model\FactoryService\StoneOrderModel.cs" />
+    <Compile Include="model\FactoryService\StoneTotalModel.cs" />
+    <Compile Include="model\NetTest.cs" />
+    <Compile Include="model\paytype\PayType.cs" />
+    <Compile Include="model\print\BillConfig.cs" />
+    <Compile Include="model\ConfigModelInterface.cs" />
+    <Compile Include="model\customer\ship-customer\ShipCustomer.cs" />
+    <Compile Include="model\customer\ship-customer\ShipCustomerCar.cs" />
+    <Compile Include="model\customer\ship-customer\ShipCustomerGoodsPrice.cs" />
+    <Compile Include="model\customer\ship-customer\ShipCustomerMoney.cs" />
+    <Compile Include="model\customer\stock-customer\StockCustomer.cs" />
+    <Compile Include="model\customer\stock-customer\StockCustomerCar.cs" />
+    <Compile Include="model\customer\stock-customer\StockCustomerGoodsPrice.cs" />
+    <Compile Include="model\goods\ship-goods\ShipGoods.cs" />
+    <Compile Include="model\goods\stock-goods\StockGoods.cs" />
+    <Compile Include="model\ModelHelper.cs" />
+    <Compile Include="model\print\ShipOrderDataSet.cs" />
+    <Compile Include="model\print\StockOrderDataSet.cs" />
+    <Compile Include="model\role\Permission.cs" />
+    <Compile Include="model\ship-order\ShipOrder.cs" />
+    <Compile Include="model\ship-order\ShipOrderColumnsVisibility.cs" />
+    <Compile Include="model\stock-order\StockOrder.cs" />
+    <Compile Include="model\stock-order\StockOrderColumnsVisibility.cs" />
+    <Compile Include="model\system\SystemModel.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="view-model\accept\AcceptViewModel.cs" />
+    <Compile Include="view-model\customer\ship-customer\CreateShipCustomerCarViewModel.cs" />
+    <Compile Include="view-model\customer\ship-customer\CreateShipCustomerViewModel.cs" />
+    <Compile Include="view-model\customer\ship-customer\EditOrderForCusViewModel.cs" />
+    <Compile Include="view-model\customer\ship-customer\SetShipCustomerMoneyViewModel.cs" />
+    <Compile Include="view-model\customer\ship-customer\SetShipCustomerPriceViewModel.cs" />
+    <Compile Include="view-model\customer\ship-customer\SettleShipCustomerViewModel.cs" />
+    <Compile Include="view-model\customer\ship-customer\ShipCustomerDetailsViewModel.cs" />
+    <Compile Include="view-model\customer\ship-customer\ShipCustomerStatementViewModel.cs" />
+    <Compile Include="view-model\customer\ship-customer\ShipCustomerViewModel.cs" />
+    <Compile Include="view-model\customer\stock-customer\CreateStockCustomerViewModel.cs" />
+    <Compile Include="view-model\customer\stock-customer\StockCustomerInformationViewModel.cs" />
+    <Compile Include="view-model\customer\stock-customer\StockCustomerViewModel.cs" />
+    <Compile Include="view-model\device\DeviceViewModel.cs" />
+    <Compile Include="view-model\MainWindowViewModel.cs" />
+    <Compile Include="view-model\paytype\PayTypeViewModel.cs" />
+    <Compile Include="view-model\print\PrintPageViewModel.cs" />
+    <Compile Include="view-model\ship-bill\ShipBillViewModel.cs" />
+    <Compile Include="view-model\ship-goods\ChangeGoodsPriceViewModel.cs" />
+    <Compile Include="view-model\role\PermissionViewModel.cs" />
+    <Compile Include="view-model\role\RolePageViewModel.cs" />
+    <Compile Include="view-model\ship-goods\ShipGoodsViewModel.cs" />
+    <Compile Include="view-model\ship-order-manage\PrecisionSearchShipOrderViewModel.cs" />
+    <Compile Include="view-model\ship-order-manage\ShipOrderManageViewModel.cs" />
+    <Compile Include="Domain\ReferBillWindow.xaml.cs">
+      <DependentUpon>ReferBillWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view-model\ship-order\ShipOrderDetailsViewModel.cs" />
+    <Compile Include="view-model\ship-order\ShipOrderMendViewModel.cs" />
+    <Compile Include="view-model\ship-order\ShipOrderViewModel.cs" />
+    <Compile Include="view-model\stock-bill\StockBillViewModel.cs" />
+    <Compile Include="view-model\stock-goods\ChangeStockGodsPriceViewModel.cs" />
+    <Compile Include="view-model\stock-goods\CreateStockGoodsViewModel.cs" />
+    <Compile Include="view-model\stock-goods\StockGoodsViewModel.cs" />
+    <Compile Include="view-model\stock-bill\EditOrdersViewModel.cs" />
+    <Compile Include="view-model\stock-order-manage\PrecisionSearchStockOrderViewModel.cs" />
+    <Compile Include="view-model\stock-order-manage\StockOrderManageViewModel.cs" />
+    <Compile Include="view-model\stock-order\StockOrderDetailsViewModel.cs" />
+    <Compile Include="view-model\stock-order\StockOrderMendViewModel.cs" />
+    <Compile Include="view-model\stock-order\StockOrderViewModel.cs" />
+    <Compile Include="view-model\system\SystemPageViewModel.cs" />
+    <Compile Include="view-model\user\UserGridViewModel.cs" />
+    <Compile Include="views\CommonUI\WatchBigImgWindow.xaml.cs">
+      <DependentUpon>WatchBigImgWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\DefaultPage.xaml.cs">
+      <DependentUpon>DefaultPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\finance\accept\AcceptPage.xaml.cs">
+      <DependentUpon>AcceptPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\finance\accept\EditAcceptDialog.xaml.cs">
+      <DependentUpon>EditAcceptDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\finance\paytype\AddPayTypeDialog.xaml.cs">
+      <DependentUpon>AddPayTypeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\finance\paytype\EditPayTypeDialog.xaml.cs">
+      <DependentUpon>EditPayTypeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\finance\paytype\PayTypePage.xaml.cs">
+      <DependentUpon>PayTypePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\finance\report\ReportPage.xaml.cs">
+      <DependentUpon>ReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\Loading\LoadingDialog.xaml.cs">
+      <DependentUpon>LoadingDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\login\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\ship-customer\CreateShipCustomerCarDialog.xaml.cs">
+      <DependentUpon>CreateShipCustomerCarDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\ship-customer\CreateShipCustomerDialog.xaml.cs">
+      <DependentUpon>CreateShipCustomerDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\ship-customer\EditOrderForCusDialog.xaml.cs">
+      <DependentUpon>EditOrderForCusDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\ship-customer\SetShipCustomerMoneyDialog.xaml.cs">
+      <DependentUpon>SetShipCustomerMoneyDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\ship-customer\SetShipCustomerPriceDialog.xaml.cs">
+      <DependentUpon>SetShipCustomerPriceDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\ship-customer\SettleShipCustomerDialog.xaml.cs">
+      <DependentUpon>SettleShipCustomerDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\ship-customer\ShipCustomerDetailsDialog.xaml.cs">
+      <DependentUpon>ShipCustomerDetailsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\ship-customer\ShipCustomerStatementWindow.xaml.cs">
+      <DependentUpon>ShipCustomerStatementWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\stock-customer\CreateStockCustomerDialog.xaml.cs">
+      <DependentUpon>CreateStockCustomerDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\stock-customer\StockCustomerInformationDialog.xaml.cs">
+      <DependentUpon>StockCustomerInformationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\stock-customer\StockCustomerPage.xaml.cs">
+      <DependentUpon>StockCustomerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\ship-bill\ShipBillPage.xaml.cs">
+      <DependentUpon>ShipBillPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\ship-goods\ChangeGoodsPriceDialog.xaml.cs">
+      <DependentUpon>ChangeGoodsPriceDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\ship-goods\GoodsPage.xaml.cs">
+      <DependentUpon>GoodsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\ship-goods\NewGoodsDialog.xaml.cs">
+      <DependentUpon>NewGoodsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\customer\ship-customer\ShipCustomerPage.xaml.cs">
+      <DependentUpon>ShipCustomerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\ship-order-manage\PrecisionSearchShipOrderDialog.xaml.cs">
+      <DependentUpon>PrecisionSearchShipOrderDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\ship-order-manage\ShipOrderManage.xaml.cs">
+      <DependentUpon>ShipOrderManage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\ship-order\ShipOrderDetailsDialog.xaml.cs">
+      <DependentUpon>ShipOrderDetailsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\ship-order\ShipOrderEnterDetailsDialog.xaml.cs">
+      <DependentUpon>ShipOrderEnterDetailsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\ship-order\ShipOrderMendPage.xaml.cs">
+      <DependentUpon>ShipOrderMendPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\ship-order\ShipOrderPage.xaml.cs">
+      <DependentUpon>ShipOrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\stock-bill\StockBillPage.xaml.cs">
+      <DependentUpon>StockBillPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\stock-goods\ChangeStockGoodsPriceDialog.xaml.cs">
+      <DependentUpon>ChangeStockGoodsPriceDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\stock-goods\CreateStockGoodsDialog.xaml.cs">
+      <DependentUpon>CreateStockGoodsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\stock-goods\StockGoodsPage.xaml.cs">
+      <DependentUpon>StockGoodsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\stock-bill\EditOrdersDialog.xaml.cs">
+      <DependentUpon>EditOrdersDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\stock-order-manage\PrecisionSearchStockOrderDialog.xaml.cs">
+      <DependentUpon>PrecisionSearchStockOrderDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\stock-order-manage\StockOrderManage.xaml.cs">
+      <DependentUpon>StockOrderManage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\stock-order\StockOrderDetailsDialog.xaml.cs">
+      <DependentUpon>StockOrderDetailsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\stock-order\StockOrderEnterDetailsDialog.xaml.cs">
+      <DependentUpon>StockOrderEnterDetailsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\stock-order\StockOrderMendPage.xaml.cs">
+      <DependentUpon>StockOrderMendPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\marketing\stock-order\StockOrderPage.xaml.cs">
+      <DependentUpon>StockOrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\adjust-weight\AdjustWeightPage.xaml.cs">
+      <DependentUpon>AdjustWeightPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\device\camera\Hikvision1Control.xaml.cs">
+      <DependentUpon>Hikvision1Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\device\camera\Hikvision2Control.xaml.cs">
+      <DependentUpon>Hikvision2Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\device\DevicePage.xaml.cs">
+      <DependentUpon>DevicePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\print\PreviewBillTemplateWindow.xaml.cs">
+      <DependentUpon>PreviewBillTemplateWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\print\PrintOperateControl.xaml.cs">
+      <DependentUpon>PrintOperateControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\print\PrintPage.xaml.cs">
+      <DependentUpon>PrintPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\role\ChangePasswordDialog.xaml.cs">
+      <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\role\EditUserDialog.xaml.cs">
+      <DependentUpon>EditUserDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\role\NewRoleDialog.xaml.cs">
+      <DependentUpon>NewRoleDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view-model\role\NewRoleDialogViewModel.cs" />
+    <Compile Include="IWebApi.cs" />
+    <Compile Include="model\BaseModel.cs" />
+    <Compile Include="model\DataInfo.cs" />
+    <Compile Include="model\role\Role.cs" />
+    <Compile Include="model\user\User.cs" />
+    <Compile Include="view-model\CommonValidationRule.cs" />
+    <Compile Include="view-model\user\UserViewModel.cs" />
+    <Compile Include="view-model\user\UserValidateInSetter.cs" />
+    <Compile Include="views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\role\NewUserDialog.xaml.cs">
+      <DependentUpon>NewUserDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\role\RolePage.xaml.cs">
+      <DependentUpon>RolePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\setting\system\SystemPage.xaml.cs">
+      <DependentUpon>SystemPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\StockOrderReport.rdlc" />
+    <EmbeddedResource Include="Reports\ShipOrderReport.rdlc" />
+    <EmbeddedResource Include="Reports\ReferShipBill.rdlc" />
+    <EmbeddedResource Include="Reports\ReferStockBill.rdlc" />
+    <EmbeddedResource Include="template\Ship\Enter\标准规格\宽24.1cm高9.3cm_默认.rdlc" />
+    <EmbeddedResource Include="template\Ship\Enter\热敏小票\宽80mm_带单价.rdlc" />
+    <EmbeddedResource Include="template\Ship\Enter\热敏小票\宽80mm_默认.rdlc" />
+    <EmbeddedResource Include="template\Ship\Exit\标准规格\宽24.1cm高9.3cm_带单价.rdlc" />
+    <EmbeddedResource Include="template\Ship\Exit\标准规格\宽24.1cm高9.3cm_默认.rdlc" />
+    <EmbeddedResource Include="template\Ship\Exit\热敏小票\宽80mm_带单价.rdlc" />
+    <EmbeddedResource Include="template\Ship\Exit\热敏小票\宽80mm_带单价_二维码.rdlc" />
+    <EmbeddedResource Include="template\Ship\Exit\热敏小票\宽80mm_默认_二维码.rdlc" />
+    <EmbeddedResource Include="template\Ship\Exit\热敏小票\宽80mm_默认.rdlc" />
+    <EmbeddedResource Include="template\Ship\Exit\特殊规格\宽12cm高9.3cm_默认.rdlc" />
+    <EmbeddedResource Include="template\Stock\Enter\标准规格\宽24.1cm高9.3cm_默认.rdlc" />
+    <EmbeddedResource Include="template\Stock\Enter\热敏小票\宽80mm_默认.rdlc" />
+    <EmbeddedResource Include="template\Stock\Exit\标准规格\宽24.1cm高9.3cm_无单价.rdlc" />
+    <EmbeddedResource Include="template\Stock\Exit\标准规格\宽24.1cm高9.3cm_默认.rdlc" />
+    <EmbeddedResource Include="template\Stock\Exit\热敏小票\宽80mm_无单价.rdlc" />
+    <EmbeddedResource Include="template\Stock\Exit\热敏小票\宽80mm_默认.rdlc" />
+    <EmbeddedResource Include="template\Stock\Exit\特殊规格\宽12cm高9.3cm_无毛皮重.rdlc" />
+    <EmbeddedResource Include="template\Stock\Exit\特殊规格\宽12cm高9.3cm_默认.rdlc" />
+    <None Include="hikvisionBin\HCNetSDKCom\HCAlarm.lib" />
+    <None Include="hikvisionBin\HCNetSDKCom\HCGeneralCfgMgr.lib" />
+    <None Include="hikvisionBin\HCNetSDKCom\HCPreview.lib" />
+    <None Include="local.db" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ponds\UMC555江苏赛摩系列.pp" />
+    <None Include="ponds\上海耀华XK3190系列1.pp" />
+    <None Include="ponds\宁波柯力D2008 D2009 XK3118 D11 D12 D13系列.pp" />
+    <None Include="ponds\聊城华科XK3199系列.pp" />
+    <None Include="ponds\聊城昌信XK3168系列.pp" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\DataSources\biubiu.model.bill.BillDataModel.datasource" />
+    <None Include="Properties\DataSources\biubiu.model.bill.BillDetailsModel.datasource" />
+    <None Include="Properties\DataSources\biubiu.model.bill.CusTotalDataModel.datasource" />
+    <None Include="Properties\DataSources\biubiu.model.print.ShipOrderDataSet.datasource" />
+    <None Include="Properties\DataSources\biubiu.model.print.StockOrderDataSet.datasource" />
+    <None Include="Properties\DataSources\biubiu.model.ship_order.ShipOrder.datasource" />
+    <None Include="Properties\DataSources\biubiu.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\biubiu.Properties.Settings.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="System\Web\" />
+    <Folder Include="template\Ship\Enter\其他\" />
+    <Folder Include="template\Ship\Enter\特殊规格\" />
+    <Folder Include="template\Ship\Exit\其他\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Domain\biuMessageBox\BiuMessageBoxWindows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Domain\pages\PageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Domain\PreviewCameraWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Domain\SearchListBoxControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Domain\softKeyBoard\SoftKeyBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Domain\ReferBillWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Domain\TimePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FactoryService\StoneProduce\CarGroupOperateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FactoryService\StoneProduce\CarOperateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FactoryService\StoneProduce\StoneProducePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\CommonUI\WatchBigImgWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\DefaultPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\finance\accept\AcceptPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\finance\accept\EditAcceptDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\finance\paytype\AddPayTypeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\finance\paytype\EditPayTypeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\finance\paytype\PayTypePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\finance\report\ReportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\Loading\LoadingDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\login\LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="views\marketing\customer\ship-customer\CreateShipCustomerCarDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\customer\ship-customer\CreateShipCustomerDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\customer\ship-customer\EditOrderForCusDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\customer\ship-customer\SetShipCustomerMoneyDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\customer\ship-customer\SetShipCustomerPriceDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\customer\ship-customer\SettleShipCustomerDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\customer\ship-customer\ShipCustomerDetailsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\customer\ship-customer\ShipCustomerStatementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\customer\stock-customer\CreateStockCustomerDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\customer\stock-customer\StockCustomerInformationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\customer\stock-customer\StockCustomerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\ship-bill\ShipBillPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\ship-goods\ChangeGoodsPriceDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\ship-goods\GoodsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\ship-goods\NewGoodsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\customer\ship-customer\ShipCustomerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\ship-order-manage\PrecisionSearchShipOrderDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\ship-order-manage\ShipOrderManage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\ship-order\ShipOrderDetailsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\ship-order\ShipOrderEnterDetailsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\ship-order\ShipOrderMendPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\ship-order\ShipOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\stock-bill\StockBillPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\stock-goods\ChangeStockGoodsPriceDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\stock-goods\CreateStockGoodsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\stock-goods\StockGoodsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\stock-bill\EditOrdersDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\stock-order-manage\PrecisionSearchStockOrderDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\stock-order-manage\StockOrderManage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\stock-order\StockOrderDetailsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\stock-order\StockOrderEnterDetailsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\stock-order\StockOrderMendPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\marketing\stock-order\StockOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\adjust-weight\AdjustWeightPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\device\camera\Hikvision1Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\device\camera\Hikvision2Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\device\DevicePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\print\PreviewBillTemplateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\print\PrintOperateControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\print\PrintPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\role\ChangePasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\role\EditUserDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\role\NewRoleDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\role\NewUserDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\role\RolePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\setting\system\SystemPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\000-001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\000-000.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\000-002.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\000-003.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\001-000.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\greenLight.png" />
+    <Resource Include="Resources\redLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.1\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.1\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\packages\WebApiClient.JIT.1.0.8\analyzers\dotnet\cs\WebApiClient.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SqlServerTypes\win_x64\msvcr120.dll" />
+    <Content Include="SqlServerTypes\win_x64\SqlServerSpatial140.dll" />
+    <Content Include="SqlServerTypes\win_x86\msvcr120.dll" />
+    <Content Include="SqlServerTypes\win_x86\SqlServerSpatial140.dll" />
+    <None Include="Resources\gray_back.png" />
+    <Resource Include="Resources\bill.png" />
+    <Content Include="hikvisionBin\AudioRender.dll" />
+    <Content Include="hikvisionBin\D3DCompiler_43.dll" />
+    <Content Include="hikvisionBin\d3dx9_43.dll" />
+    <Content Include="hikvisionBin\HCCore.dll" />
+    <Content Include="hikvisionBin\HCNetSDK.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\AnalyzeData.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\AudioIntercom.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\HCAlarm.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\HCCoreDevCfg.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\HCDisplay.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\HCGeneralCfgMgr.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\HCIndustry.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\HCPlayBack.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\HCPreview.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\HCVoiceTalk.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\libiconv2.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\OpenAL32.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\StreamTransClient.dll" />
+    <Content Include="hikvisionBin\HCNetSDKCom\SystemTransform.dll" />
+    <Content Include="hikvisionBin\PlayCtrl.dll" />
+    <Content Include="hikvisionBin\SuperRender.dll" />
+    <Resource Include="logo.ico" />
+    <Content Include="NDP461-KB3102438-Web.exe" />
+    <Resource Include="Resources\information.png" />
+    <Resource Include="Resources\none.png" />
+    <Resource Include="Resources\question.png" />
+    <Resource Include="Resources\warning.png" />
+    <Resource Include="Resources\error.png" />
+    <Content Include="SqlServerTypes\readme.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RuningInfo\RuningInfo.csproj">
+      <Project>{22B20473-DFB6-4D8B-BA83-ABAA99AEAE6B}</Project>
+      <Name>RuningInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\wow\wow.csproj">
+      <Project>{8c1f4e4a-687d-4aa4-ac48-534d6433d7ac}</Project>
+      <Name>wow</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.110.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.110.0\build\net46\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\ShowMeTheXAML.MSBuild.1.0.12\build\net45\ShowMeTheXAML.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ShowMeTheXAML.MSBuild.1.0.12\build\net45\ShowMeTheXAML.MSBuild.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /e /r /y $(ProjectDir)ponds $(ProjectDir)$(OutDir)ponds\
+xcopy /e /r /y $(ProjectDir)template $(ProjectDir)$(OutDir)template\
+xcopy /e /r /y $(ProjectDir)Reports $(ProjectDir)$(OutDir)Reports\
+xcopy /e /r /y $(ProjectDir)hikvisionBin $(ProjectDir)$(OutDir)bin\
+xcopy /e /r /y $(ProjectDir)images $(ProjectDir)$(OutDir)images\
+xcopy /r /y $(ProjectDir)local.db  $(ProjectDir)$(OutDir)
+xcopy /r /y $(ProjectDir)logo.ico $(ProjectDir)$(OutDir)
+xcopy /r /y $(ProjectDir)NDP461-KB3102438-Web.exe $(ProjectDir)$(OutDir)</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.110.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.110.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\ShowMeTheXAML.MSBuild.1.0.12\build\net45\ShowMeTheXAML.MSBuild.targets" Condition="Exists('..\packages\ShowMeTheXAML.MSBuild.1.0.12\build\net45\ShowMeTheXAML.MSBuild.targets')" />
+</Project>

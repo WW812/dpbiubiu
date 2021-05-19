@@ -1,0 +1,96 @@
+﻿<!-- 海康威视网络摄像头界面 -->
+<UserControl x:Class="biubiu.views.setting.device.camera.Hikvision2Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:biubiu.views.setting.device.camera"
+             xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+             mc:Ignorable="d" Unloaded="UserControl_Unloaded" Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+            </Style>
+
+            <Style TargetType="WindowsFormsHost">
+                <Setter Property="Width" Value="428"/>
+                <Setter Property="Height" Value="341"/>
+                <Setter Property="Margin" Value="10 20 0 20"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal">
+        <Grid Margin="0 0 20 0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*" MinWidth="160"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Margin="0 0 10 0">设备端口:</TextBlock>
+            <TextBox x:Name="PortTextBox" Grid.Row="0" Grid.Column="1" FontSize="14" Text="{Binding CurrentPond.CameraPort}"></TextBox>
+            <TextBlock Grid.Row="1" Grid.Column="0" Margin="0 0 10 0">用户名:</TextBlock>
+            <TextBox x:Name="UserNameTextBox" Grid.Row="1" Grid.Column="1" FontSize="14" Text="{Binding CurrentPond.CameraUserName}"></TextBox>
+            <TextBlock Grid.Row="2" Grid.Column="0" Margin="0 0 10 0">密码:</TextBlock>
+            <TextBox x:Name="PasswordTextBox" Grid.Row="2" Grid.Column="1" FontSize="14" Text="{Binding CurrentPond.CameraPassWord}"></TextBox>
+            <CheckBox Grid.Row="3" Grid.Column="0" x:Name="CaptureEnableCheckBox" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignCheckBox}"
+                       Command="{Binding SaveCameraTypeCommand}" CommandParameter="{Binding IsChecked, ElementName=CaptureEnableCheckBox}" ToolTip="勾选后，过磅自动抓拍">启用抓拍</CheckBox>
+        </Grid>
+
+        <Grid Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="350"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <WindowsFormsHost Grid.Row="0" Grid.Column="0">
+                <forms:PictureBox x:Name="RealPlayWnd1" BackColor="Gray"></forms:PictureBox>
+            </WindowsFormsHost>
+            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom">1号摄像头</TextBlock>
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox FontSize="18" Margin="10 0"  VerticalAlignment="Center" MinWidth="200" Text="{Binding CurrentPond.CameraIP1}"/>
+                <Button x:Name="Camera1" Style="{StaticResource MaterialDesignFlatButton}" Click="Camera_Click">测试连接</Button>
+                <CheckBox Grid.Row="3" Grid.Column="1" x:Name="WatchEnableCheckBox1" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignCheckBox}"
+                       Command="{Binding SaveWatchEnabledIP1Command}" CommandParameter="{Binding IsChecked, ElementName=WatchEnableCheckBox1}"
+                      ToolTip="勾选后，可在录像界面查看">启用查看</CheckBox>
+            </StackPanel>
+            <WindowsFormsHost Grid.Row="0" Grid.Column="1">
+                <forms:PictureBox x:Name="RealPlayWnd2" BackColor="Gray" ></forms:PictureBox>
+            </WindowsFormsHost>
+            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom">2号摄像头</TextBlock>
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox FontSize="18" Margin="10 0"  VerticalAlignment="Center" MinWidth="200" Text="{Binding CurrentPond.CameraIP2}"/>
+                <Button x:Name="Camera2"  Style="{StaticResource MaterialDesignFlatButton}" Click="Camera_Click">测试连接</Button>
+                <CheckBox Grid.Row="3" Grid.Column="1" x:Name="WatchEnableCheckBox2" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignCheckBox}"
+                       Command="{Binding SaveWatchEnabledIP2Command}" CommandParameter="{Binding IsChecked, ElementName=WatchEnableCheckBox2}"
+                      ToolTip="勾选后，可在录像界面查看">启用查看</CheckBox>
+            </StackPanel>
+            <WindowsFormsHost Grid.Row="0" Grid.Column="2">
+                <forms:PictureBox x:Name="RealPlayWnd3" BackColor="Gray" ></forms:PictureBox>
+            </WindowsFormsHost>
+            <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">3号摄像头</TextBlock>
+            <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox FontSize="18" Margin="10 0"  VerticalAlignment="Center" MinWidth="200" Text="{Binding CurrentPond.CameraIP3}"/>
+                <Button x:Name="Camera3"  Style="{StaticResource MaterialDesignFlatButton}" Click="Camera_Click">测试连接</Button>
+                <CheckBox Grid.Row="3" Grid.Column="1" x:Name="WatchEnableCheckBox3" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignCheckBox}"
+                       Command="{Binding SaveWatchEnabledIP3Command}" CommandParameter="{Binding IsChecked, ElementName=WatchEnableCheckBox3}"
+                      ToolTip="勾选后，可在录像界面查看">启用查看</CheckBox>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</UserControl>

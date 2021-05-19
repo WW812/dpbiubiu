@@ -1,0 +1,176 @@
+﻿<UserControl x:Class="biubiu.views.marketing.stock_order.StockOrderMendPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:biubiu.views.marketing.stock_order"
+             xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+             xmlns:domain="clr-namespace:biubiu.Domain"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:vm ="clr-namespace:biubiu.view_model"
+             xmlns:md="clr-namespace:biubiu.model.ship_goods"
+             xmlns:biuCovert ="clr-namespace:biubiu.Converter"
+             mc:Ignorable="d"  Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ControlTemplate x:Key="validationTemplate">
+                <Grid>
+                    <AdornedElementPlaceholder/>
+                </Grid>
+            </ControlTemplate>
+
+            <biuCovert:IntToBooleanConverter x:Key="IntToBooleanConverter"/>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+                <Setter Property="Margin" Value="0 0 10 0"/>
+            </Style>
+            <Style TargetType="ComboBox" x:Key="DefaultComboBox">
+            </Style>
+
+            <biuCovert:LongToDateTimeConverter x:Key="LongToDateTimeConverter"/>
+            <materialDesignConverters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" TrueValue="Visible" FalseValue="Hidden" />
+            <materialDesignConverters:BooleanToVisibilityConverter x:Key="ReverseInvertedBooleanToVisibilityConverter" TrueValue="Hidden" FalseValue="Visible" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Validation.ErrorTemplate="{StaticResource validationTemplate}" x:Name="grid" Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="90"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="160"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="11" FontSize="20" Margin="0" HorizontalAlignment="Left">进料单据手动补单</TextBlock>
+        <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0" />
+        <TextBlock Grid.Row="2" Grid.Column="0">车牌号:</TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="9" FontSize="18" Text="{Binding Order.CarId}"/>
+        <TextBlock Grid.Row="3" Grid.Column="0">毛重:</TextBlock>
+        <TextBox x:Name="CarGrossWeightTextBox" Grid.Row="3" Grid.Column="2" FontSize="18" Text="{Binding Order.CarGrossWeight}"
+                 PreviewTextInput="TextBox_PreviewTextInput" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"
+                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False"
+                 MaxLength="6"/>
+        <TextBlock Grid.Row="3" Grid.Column="4">皮重:</TextBlock>
+        <TextBox x:Name="CarTareTextBox" Grid.Row="3" Grid.Column="6" FontSize="18"  Text="{Binding Order.CarTare}"
+                 PreviewTextInput="TextBox_PreviewTextInput" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"
+                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False"
+                 LostFocus="TextBox_LostFocus" MaxLength="6"/>
+        <TextBlock Grid.Row="3" Grid.Column="8">净重:</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="10" Text="{Binding Order.CarNetWeight}"/>
+        <ToggleButton x:Name="CustomerTogBtn" Grid.Row="4" Grid.Column="0" VerticalAlignment="Bottom"
+        IsChecked="{Binding Order.CustomerType, Converter={StaticResource IntToBooleanConverter}}"
+              ToolTip="当前为零售单据" Width="36" Height="36" Style="{StaticResource MaterialDesignActionToggleButton}"
+                      Checked="CustomerTogBtn_Checked" Unchecked="CustomerTogBtn_Unchecked">
+            <ToggleButton.Content>
+                <TextBlock FontWeight="Bold" FontSize="30" Margin="0">散</TextBlock>
+            </ToggleButton.Content>
+            <materialDesign:ToggleButtonAssist.OnContent>
+                <TextBlock FontWeight="Bold" FontSize="30" Margin="0">客</TextBlock>
+            </materialDesign:ToggleButtonAssist.OnContent>
+        </ToggleButton>
+        <!--
+        <ComboBox x:Name="CustomerComboBox" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="10" ScrollViewer.ScrollChanged="CustomerComboBox_ScrollChanged"
+                  materialDesign:HintAssist.Hint="输入客户名称" IsEditable="True" materialDesign:HintAssist.HintOpacity=".26"
+                  IsEnabled="{Binding IsChecked, ElementName=CustomerTogBtn}" FontSize="18" SelectionChanged="CustomerComboBox_SelectionChanged"
+                  TextSearch.TextPath="Name" DisplayMemberPath="Name" VerticalAlignment="Bottom"
+                  SelectedItem="{Binding Order.Customer}" ItemsSource="{Binding CustomerItems}">
+        </ComboBox>
+        -->
+
+        <domain:SearchListBoxControl x:Name="CustomerComboBox2" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="10"
+                             materialDesign:HintAssist.Hint="输入客户名称" materialDesign:HintAssist.HintOpacity=".26" 
+                             FontSize="18" TextBoxBase.TextChanged="CustomerComboBox2_TextChanged" Width="780"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0">料品:</TextBlock>
+        <ComboBox  Grid.Row="5" Grid.Column="2" VerticalAlignment="Bottom" SelectionChanged="ComboBox_SelectionChanged"
+                   materialDesign:HintAssist.HintOpacity=".26"  FontSize="18" 
+                   TextSearch.TextPath="Name" DisplayMemberPath="Name" 
+                   SelectedItem="{Binding Order.Goods}" ItemsSource="{Binding GoodsItems}">
+        </ComboBox>
+        <TextBlock Grid.Row="5" Grid.Column="4">采购单价:</TextBlock>
+        <TextBox x:Name="GoodsRealPriceTextBox" Grid.Row="5" Grid.Column="6" FontSize="18" Text="{Binding Order.GoodsRealPrice}"
+                 PreviewTextInput="TextBox_PreviewTextInput" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"
+                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False"
+                 LostFocus="TextBox_LostFocus" MaxLength="8"/>
+        <TextBlock Grid.Row="5" Grid.Column="8">运费<Run FontSize="18">(每吨)</Run>:</TextBlock>
+        <TextBox x:Name="FreightOfTonTextBox" Grid.Row="5" Grid.Column="10" FontSize="18"
+                 Text="{Binding Order.FreightOfTon}" PreviewTextInput="TextBox_PreviewTextInput" MaxLength="6"
+                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False"
+                 LostFocus="TextBox_LostFocus" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"/>
+
+        <ComboBox x:Name="DeductComboBox" Grid.Row="6" Grid.Column="0" Height="30" SelectionChanged="DeductComboBox_SelectionChanged"
+                  SelectedIndex="{Binding Order.DeductWeightType}" FontSize="18" VerticalAlignment="Bottom"
+                  Style="{StaticResource DefaultComboBox}" >
+            <ComboBoxItem>扣吨</ComboBoxItem>
+            <ComboBoxItem>扣率</ComboBoxItem>
+        </ComboBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="6" Grid.Column="2">
+            <TextBox x:Name="DeductWeightTextBox" Text="{Binding Order.DeductWeight}"
+                 PreviewTextInput="DeductWeightTextBox_PreviewTextInput"  FontSize="18" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"
+                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False"
+                 LostFocus="TextBox_LostFocus" TextChanged="TextBox_TextChanged"/>
+            <TextBlock x:Name="DeductSignText" VerticalAlignment="Bottom" Text="吨"/>
+        </StackPanel>
+
+<!--  控件位置移动
+        <TextBlock Grid.Row="6" Grid.Column="4">支付金额:</TextBlock>
+        <TextBlock Grid.Row="6" Grid.Column="6" Foreground="Red" FontWeight="Bold" Text="{Binding Order.RealMoney}"></TextBlock>
+        -->
+
+        <TextBlock Grid.Row="6" Grid.Column="4">支付状态:</TextBlock>
+        <ComboBox Grid.Row="6" Grid.Column="6" FontSize="18" Height="30" VerticalAlignment="Bottom"
+                  SelectedIndex="{Binding Order.Paid}">
+            <ComboBoxItem>未支付</ComboBoxItem>
+            <ComboBoxItem>已支付</ComboBoxItem>
+        </ComboBox>
+
+        <TextBlock Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" Margin="4,0,0,0" FontSize="18">应付金额:</TextBlock>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Order.OrderMoney}" FontSize="18"/>
+        <TextBlock Grid.Row="7" Grid.Column="4" Margin="4,0" FontSize="18">抹零:</TextBlock>
+        <TextBox Grid.Row="7" Grid.Column="6" x:Name="DiscountMoneyTextBox" Text="{Binding Order.DiscountMoney}" Margin="4,-8,4,4" MaxLength="10"
+                 PreviewTextInput="TextBox_PreviewTextInput" MinWidth="50" MaxWidth="90" FontSize="18"
+                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False"
+                 LostFocus="TextBox_LostFocus" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"/>
+
+        <TextBlock Grid.Row="7" Grid.Column="8" FontSize="18">实付金额:</TextBlock>
+        <TextBlock Grid.Row="7" Grid.Column="10" Foreground="Red" FontWeight="Bold" Text="{Binding Order.RealMoney}" FontSize="18"></TextBlock>
+
+        <TextBlock Grid.Row="8" Grid.Column="0">备注:</TextBlock>
+        <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="10" materialDesign:HintAssist.Hint="备注" Text="{Binding Order.Note}"/>
+        <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Margin="0 16 0 0" Height="30"
+                  Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="11" HorizontalAlignment="Center"
+                  IsChecked="{Binding IsCreateAgain}" FontSize="14">
+            连续补单
+        </CheckBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="11" Margin="0 10 0 0">
+            <Button x:Name="SaveButton" IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}"  Command="{Binding SubmitOrderCommand}"
+                     Content="保存" FontSize="18" IsEnabled="{Binding RequestStatus.IsAllComplete}" CommandParameter="{Binding ElementName=userControl, Mode=OneWay}"/>
+            <Button IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                     Content="取消" FontSize="18"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

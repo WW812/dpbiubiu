@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="biubiu.views.marketing.ship_order_manage.ShipOrderManage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:domain="clr-namespace:biubiu.Domain"
+             xmlns:local="clr-namespace:biubiu.views.marketing.ship_order_manage"
+             xmlns:biuCovert ="clr-namespace:biubiu.Converter"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"  Loaded="UserControl_Loaded"
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="validationTemplate">
+            <Grid>
+                <AdornedElementPlaceholder/>
+            </Grid>
+        </ControlTemplate>
+        <biuCovert:LongToDateTimeConverter x:Key="LongToDateTimeConverter"/>
+        <biuCovert:ShipOrderStatusToDescribeConverter x:Key="ShipOrderStatusToDescribeConverter"/>
+    </UserControl.Resources>
+    <DockPanel Background="White">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <TextBox Margin="30 8 8 8" FontSize="16" MinWidth="100" materialDesign:HintAssist.Hint="单号" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                         Text="{Binding SearchOrder.OrderNo}"/>
+            <TextBox Margin="8" FontSize="16" MinWidth="100" materialDesign:HintAssist.Hint="车牌号" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                         Text="{Binding SearchOrder.CarId}"/>
+            <DatePicker x:Name="SimpleDatePicker" Margin="8" FontSize="16" Width="110" materialDesign:HintAssist.Hint="出厂日期" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
+                            SelectedDateChanged="SimpleDatePicker_SelectedDateChanged"/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding SearchCommand}"
+                        IsEnabled="{Binding ButtonIsEnabled}" VerticalAlignment="Bottom">查询</Button>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding ResetSearchOrderCommand}"
+                        Click="Button_Click" IsEnabled="{Binding ButtonIsEnabled}" VerticalAlignment="Bottom">重置</Button>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding RunPrecisionSearchShipOrderDialogCommand}" Click="Button_Click" VerticalAlignment="Bottom">精准查询</Button>
+
+            <Button x:Name="ExportOrdersBtn" Style="{StaticResource MaterialDesignFlatButton}" VerticalAlignment="Bottom" ToolTip="导出单据" Click="ExportOrdersBtn_Click">导出</Button>
+            <Popup x:Name="ExportPopup" IsOpen="False" StaysOpen="False" PlacementTarget="{Binding ElementName=ExportOrdersBtn}" AllowsTransparency="True">
+                <Border BorderThickness="2" materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="5" BorderBrush="#FF808080" CornerRadius="2" Background="#FFFFFF">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="选择时间段" FontSize="14" Margin="4"/>
+                        <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0" />
+                        <DatePicker Grid.Row="2" Grid.Column="0" x:Name="StartDate"  Margin="4" VerticalAlignment="Top" Language="zh-CN" FontSize="16"
+                                            materialDesign:HintAssist.Hint="开始日期" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                            SelectedDate="{Binding ExportOrderStartDate}"/>
+                        <domain:TimePicker Grid.Row="2" Grid.Column="1" Margin="4" x:Name="StartTime" VerticalAlignment="Bottom" FontSize="14" SelectedTime="{Binding ExportOrderStartTime,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                        <DatePicker x:Name="EndtDate" Grid.Row="3" Grid.Column="0" Margin="4" VerticalAlignment="Top" Language="zh-CN" FontSize="16" materialDesign:HintAssist.Hint="结束日期" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                            SelectedDate="{Binding ExportOrderEndDate}"/>
+                        <domain:TimePicker Grid.Row="3" Grid.Column="1" Margin="4" x:Name="EndTime" FontSize="14" VerticalAlignment="Bottom" SelectedTime="{Binding ExportOrderEndTime,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Separator Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0 4" />
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="*日期置空为导出全部" FontSize="12"  VerticalAlignment="Center"/>
+                        <Button Grid.Row="5" Grid.Column="1" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding ExportOrderCommand}">导 出</Button>
+                    </Grid>
+                </Border>
+            </Popup>
+        </StackPanel>
+
+        <domain:PageControl Margin="0 8 0 0" DockPanel.Dock="Bottom"/>
+        <!-- 为DataGridColumn 提供数据源 -->
+        <FrameworkElement x:Name="ColumnsVisibility" />
+
+        <DataGrid IsReadOnly="True" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" 
+                      FontSize="15" ItemsSource="{Binding OrderItems}" Margin="0 20 0 0" HorizontalScrollBarVisibility="Auto"
+                  LoadingRow="DataGrid_LoadingRow">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="订单号" Binding="{Binding Path=OrderNo}" />
+                <DataGridTextColumn Header="车号" FontSize="18" FontWeight="Bold"  Binding="{Binding Path=CarId}" />
+                <DataGridTextColumn Header="客户名称" Binding="{Binding Path=Customer.Name}" />
+                <DataGridTextColumn Header="毛重" Binding="{Binding Path=CarGrossWeight}" />
+                <DataGridTextColumn Header="皮重" Binding="{Binding Path=CarTare}" />
+                <DataGridTextColumn Header="净重" Binding="{Binding Path=CarNetWeight}" />
+                <DataGridTextColumn Header="料品名称" Binding="{Binding Path=Goods.Name}"/>
+                <DataGridTextColumn Header="标准单价" Binding="{Binding Path=GoodsPrice}" />
+                <DataGridTextColumn Header="执行单价" Binding="{Binding Path=GoodsRealPrice}" />
+                <DataGridTextColumn Header="应收金额" Binding="{Binding Path=OrderMoney}" />
+                <DataGridTextColumn Header="优惠金额" Binding="{Binding Path=DiscountMoney}" />
+                <DataGridTextColumn Header="实收金额" Binding="{Binding Path=RealMoney}" />
+                <DataGridTextColumn Header="方量" Binding="{Binding Path=Cubic}" />
+                <DataGridTextColumn Header="进厂时间" FontSize="14"  Binding="{Binding Path=EnterTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" />
+                <DataGridTextColumn Header="进厂司磅员" Binding="{Binding Path=EnterUser.NickName}" />
+                <!--<DataGridTextColumn Header="进厂地磅号" Binding="{Binding Path=EnterPonderation}" />-->
+                <DataGridTextColumn Header="出厂时间" FontSize="14"  Binding="{Binding Path=ExitTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" />
+                <DataGridTextColumn Header="出厂司磅员" Binding="{Binding Path=ExitUser.NickName}" />
+                <!--<DataGridTextColumn Header="出厂地磅号" Binding="{Binding Path=ExitPonderation}" />-->
+                <DataGridTextColumn Header="修改人" Binding="{Binding Path=EditUser.NickName}" />
+                <!--<DataGridTextColumn Header="修改时间" FontSize="14"  Binding="{Binding Path=EditTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" />-->
+                <DataGridTextColumn Header="修改原因" Binding="{Binding Path=EditReason}" />
+                <!--<DataGridTextColumn Header="备注" Binding="{Binding Path=Note}" />-->
+                <DataGridTextColumn Header="状态" Binding="{Binding Path=Status,Converter={StaticResource ShipOrderStatusToDescribeConverter}}"/>
+                <DataGridTemplateColumn Header="操作">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="60" Height="20" Padding="0" Margin="0" ToolTip="查看单据详情" Command="{Binding  DataContext.RunOrderDetailsDialogCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding Path=.}"  Style="{DynamicResource MaterialDesignFlatButton}">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <materialDesign:PackIcon VerticalAlignment="Center" Kind="EyeOutline"  Margin="0"/>
+                                    <TextBlock Margin="4, 0, 0,0" Text="详情"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

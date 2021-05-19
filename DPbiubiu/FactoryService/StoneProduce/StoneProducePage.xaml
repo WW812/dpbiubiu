@@ -1,0 +1,145 @@
+﻿<UserControl x:Class="biubiu.FactoryService.StoneProduce.StoneProducePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:biubiu.FactoryService.StoneProduce"
+             xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+             xmlns:domain="clr-namespace:biubiu.Domain"
+             xmlns:biuCovert ="clr-namespace:biubiu.Converter"
+             mc:Ignorable="d" Background="#FFE8E8E8" Loaded="UserControl_Loaded"
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <biuCovert:LongToDateTimeConverter x:Key="LongToDateTimeConverter"/>
+        <ContextMenu x:Key="CM_CarGroup">
+            <MenuItem FontSize="20" Header="删除车队" Click="MenuItem_Click"/>
+        </ContextMenu>
+        <ContextMenu x:Key="CM_Order">
+            <MenuItem FontSize="20" Header="删除单据" Click="MenuItem_Click_1"/>
+        </ContextMenu>
+    </UserControl.Resources>
+    <DockPanel Margin="0 10 0 0">
+        <!-- 底部面板 -->
+        <Border DockPanel.Dock="Bottom" Margin="0 10 0 0" Background="White" Padding="10 10" BorderThickness="1" BorderBrush="#FFACACAC">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" FontSize="20">当月车数: <Run FontSize="22" Foreground="Red" FontWeight="Bold" x:Name="Run_t1">0</Run> 车</TextBlock>
+                <TextBlock Grid.Column="1" FontSize="20">当月吨数: <Run FontSize="22" Foreground="Red" FontWeight="Bold" x:Name="Run_t2">0</Run> 吨</TextBlock>
+                <TextBlock Grid.Column="2" FontSize="20">总计吨数: <Run FontSize="22" Foreground="Green" FontWeight="Bold" x:Name="Run_t3">0</Run> 吨</TextBlock>
+                <!--
+                <TextBlock Grid.Column="2" FontSize="20" HorizontalAlignment="Center" FontWeight="Bold"><Run FontSize="22">张三</Run>(<Run FontSize="20">鲁A12345</Run>)统计:</TextBlock>
+                <TextBlock Grid.Column="3" FontSize="20"><Run FontSize="22" FontWeight="Bold">{</Run> 车数: <Run FontSize="22" Foreground="Green" FontWeight="Bold">0</Run> 吨</TextBlock>
+                <TextBlock Grid.Column="4" FontSize="20">吨数: <Run FontSize="22" Foreground="Green" FontWeight="Bold">0</Run> 吨</TextBlock>
+                <TextBlock Grid.Column="5" FontSize="20">平均吨数: <Run FontSize="22" Foreground="Green" FontWeight="Bold">0</Run> 吨 <Run FontSize="22" FontWeight="Bold">}</Run></TextBlock>
+                -->
+            </Grid>
+        </Border>
+
+        <!-- 车队面板 -->
+        <Border DockPanel.Dock="Left"  Margin="0 0 10 0" Width="234" Background="White" Padding="10 10" BorderThickness="1" BorderBrush="#FFACACAC">
+            <DockPanel>
+                <Grid DockPanel.Dock="Top" Margin="0 0 0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Width="100" Click="Button_Click">添加车队</Button>
+                    <Button x:Name="Btn_EditCarGroup" Width="100" Grid.Column="1" IsEnabled="False" Click="Btn_EditCarGroup_Click">修改车队</Button>
+                </Grid>
+
+                <ListView x:Name="ListView_CarGroup" MinHeight="700" FontSize="18" Margin="0" SelectionChanged="ListView_CarGroup_SelectionChanged" ItemsSource="{Binding StoneCarGroupItems}"
+                          SelectedItem="{Binding SelectionCarGroup}" ContextMenu="{StaticResource CM_CarGroup}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock TextWrapping="WrapWithOverflow" ToolTip="{Binding Name}" Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </DockPanel>
+        </Border>
+        <!-- 车辆面板 -->
+        <Border DockPanel.Dock="Left" Margin="5 0 5 0" Width="700" Background="White" Padding="10 10" BorderThickness="1" BorderBrush="#FFACACAC">
+            <DockPanel>
+                <Grid DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="Btn_AddCar" Width="100" IsEnabled="False" Click="Button_Click_1">添加车辆</Button>
+                    <Button x:Name="Btn_EditCar" Width="100" Grid.Column="1" IsEnabled="False" Click="Btn_EditCar_Click">修改车辆</Button>
+                    <Button x:Name="Btn_ChangeGroup" Width="100" Grid.Column="2" IsEnabled="False">车辆换队</Button>
+                    <Button x:Name="Btn_LeaveGroup" Width="100" Grid.Column="3" IsEnabled="False" Click="Btn_LeaveGroup_Click">车辆离队</Button>
+                </Grid>
+                <DataGrid x:Name="DG_Car" Margin="0 10 0 0" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" FontSize="18" ItemsSource="{Binding StoneCarItems}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" SelectedItem="{Binding SelectionCar}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="车号"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=CarID}"/>
+                        <DataGridTextColumn Header="编号"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=CarNumber}"/>
+                        <DataGridTextColumn Header="车主"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=User}"/>
+                        <DataGridTextColumn Header="皮重"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=CarTare}"/>
+                        <DataGridTextColumn Header="车型"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=CarType}"/>
+                        <DataGridTextColumn Header="联系方式"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=Contact}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </Border>
+
+        <!-- 单据面板 -->
+        <Border  Margin="10 0 0 0" Background="White" Padding="10 10" BorderThickness="1" BorderBrush="#FFACACAC">
+            <DockPanel>
+                <Grid DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <DatePicker Grid.Column="0" x:Name="StartDate" Margin="4" VerticalAlignment="Top" Language="zh-CN" FontSize="16"
+                                            materialDesign:HintAssist.Hint="开始日期" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                SelectedDate="{Binding SearchOrderStartDate}"/>
+                    <domain:TimePicker Grid.Column="1" Margin="4" x:Name="StartTime" VerticalAlignment="Bottom" FontSize="14" SelectedTime="{Binding SearchOrderStartTime,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <DatePicker x:Name="EndDate"  Grid.Column="2" Margin="4" VerticalAlignment="Top" Language="zh-CN" FontSize="16" materialDesign:HintAssist.Hint="结束日期"
+                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDate="{Binding SearchOrderEndDate}"/>
+                    <domain:TimePicker Grid.Column="3" Margin="4" x:Name="EndTime" FontSize="14" VerticalAlignment="Bottom" SelectedTime="{Binding SearchOrderEndTime,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button x:Name="Btn_SearchOrder" Width="100" Grid.Column="4" Click="Btn_SearchOrder_Click">查询</Button>
+                    <Button x:Name="Btn_ResetSerach" Width="100" Grid.Column="5" Click="Btn_ResetSerach_Click">重置</Button>
+                    <Button x:Name="Btn_ExportReport" Width="100" Grid.Column="6" ToolTip="根据当前设定的查询时间段导出报表" Click="Btn_ExportReport_Click">统计报表</Button>
+                    <Button x:Name="Btn_ExportDetailReport" Width="100" Grid.Column="7" ToolTip="根据当前设定的查询时间段导出报表" Click="Btn_ExportReport_Click">详情报表</Button>
+                </Grid>
+
+                <domain:PageControl Margin="0 8 0 0" DockPanel.Dock="Bottom"/>
+                    
+                <DataGrid x:Name="DG_StoneOrder" Margin="0 10 0 0" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" FontSize="18" ItemsSource="{Binding StoneOrderItems}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto" ContextMenu="{StaticResource CM_Order}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="单号"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=OrderID}"/>
+                        <DataGridTextColumn Header="车主"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=User}"/>
+                        <DataGridTextColumn Header="毛重"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=CarGrossWeight}"/>
+                        <DataGridTextColumn Header="皮重"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=CarTare}"/>
+                        <DataGridTextColumn Header="净重"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=CarNetWeight}"/>
+                        <DataGridTextColumn Header="进厂时间"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=CreateTime,Converter={StaticResource LongToDateTimeConverter},StringFormat='yyyy-MM-dd HH:mm'}"/>
+                        <DataGridTextColumn Header="出厂时间"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=UpdateTime,Converter={StaticResource LongToDateTimeConverter},StringFormat='yyyy-MM-dd HH:mm'}"/>
+                        <DataGridTextColumn Header="与上车间隔(分钟)"  FontSize="18" FontWeight="Bold" Binding="{Binding Path=Intervals}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                </DockPanel>
+        </Border>
+
+    </DockPanel>
+</UserControl>

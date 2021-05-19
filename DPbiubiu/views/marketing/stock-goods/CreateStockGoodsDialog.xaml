@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="biubiu.views.marketing.stock_goods.CreateStockGoodsDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:biubiu.views.marketing.stock_goods"
+             xmlns:biuCovert ="clr-namespace:biubiu.Converter"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:vm ="clr-namespace:biubiu.view_model"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="700">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <materialDesignConverters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" TrueValue="Hidden" FalseValue="Visible" />
+            <biuCovert:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
+            <ControlTemplate x:Key="validationTemplate">
+                <Grid>
+                    <AdornedElementPlaceholder/>
+                </Grid>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="grid" Validation.ErrorTemplate="{StaticResource validationTemplate}" Margin="16" MinWidth="300">
+        <Grid.BindingGroup>
+            <BindingGroup NotifyOnValidationError="True">
+                <BindingGroup.ValidationRules>
+                    <vm:NotEmptyValidationRule ValidationStep="ConvertedProposedValue"/>
+                </BindingGroup.ValidationRules>
+            </BindingGroup>
+        </Grid.BindingGroup>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock FontSize="26">新建料品</TextBlock>
+        <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0" />
+        <TextBox x:Name="GoodsName" wpf:HintAssist.Hint="料品名称" Style="{DynamicResource MaterialDesignFloatingHintTextBox}"                 
+                 Margin="0 6 0 0" 
+                 FontSize="22" Grid.Row="2">
+            <TextBox.Text>
+                <Binding Path="Goods.Name" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <vm:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox x:Name="GoodsRealPrice" wpf:HintAssist.Hint="采购价格" Style="{DynamicResource MaterialDesignFloatingHintTextBox}"                 
+                 Margin="0 14 0 0" PreviewTextInput="GoodsRealPrice_PreviewTextInput" MaxLength="8"
+                 FontSize="22" Grid.Row="4" LostFocus="TextBox_LostFocus" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown">
+            <TextBox.Text>
+                <Binding Path="Goods.RealPrice" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <vm:IsNonnegativeRealValidationRule ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox x:Name="RoleNote" wpf:HintAssist.Hint="备注" Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                 Margin="0 14 0 0" Text="{Binding Goods.Note}"
+                 FontSize="22" Grid.Row="6" />
+
+        <StackPanel Orientation="Horizontal" Grid.Row="8" Margin="0 16 0 0" HorizontalAlignment="Center">
+            <Button x:Name="CreateGoodsButton" IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}"
+            Click="CreateGoodsButton_Click" IsEnabled="{Binding SubmitButtonIsEnabled}" FontSize="22">
+                提交
+            </Button>
+            <Button x:Name="CancleBtn" IsCancel="True" Margin="8 0 0 0" Style="{DynamicResource MaterialDesignFlatButton}"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}" FontSize="22">
+                <Button.CommandParameter>
+                    <system:Boolean>False</system:Boolean>
+                </Button.CommandParameter>
+                取消
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
