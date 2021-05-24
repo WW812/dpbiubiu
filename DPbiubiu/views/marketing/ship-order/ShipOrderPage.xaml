@@ -11,7 +11,7 @@
              xmlns:vm ="clr-namespace:biubiu.view_model"
              xmlns:md="clr-namespace:biubiu.model.ship_goods"
              xmlns:biuCovert ="clr-namespace:biubiu.Converter"
-             xmlns:softKeyBoard ="clr-namespace:biubiu.Domain.softKeyBoard"
+             xmlns:softKeyBoard ="clr-namespace:biubiu.Domain.softKeyBoard" xmlns:wpfcustomcontrollibrary="clr-namespace:Sung.WPFCustomControlLibrary;assembly=WPFCustomControlLibrary"
              mc:Ignorable="d" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
              d:DesignHeight="1080" d:DesignWidth="1920">
     <UserControl.Resources>
@@ -111,11 +111,12 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">皮 重</TextBlock>
-                            <TextBox Grid.Row="1" Grid.Column="1" Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" Text="{Binding Order.CarTare}"/>
+                            <wpfcustomcontrollibrary:NumberTextBox x:Name="NTB_Care" Grid.Row="1" Grid.Column="1" MinWidth="120" Height="30" HorizontalContentAlignment="Center" Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" LostFocus="NumberTextBox_LostFocus" Text="{Binding Order.CarTare,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">毛 重</TextBlock>
-                            <TextBox Grid.Row="1" Grid.Column="0" Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" Text="{Binding Order.CarGrossWeight}"/>
+                            <wpfcustomcontrollibrary:NumberTextBox x:Name="NTB_Net" Grid.Row="1" Grid.Column="0" MinWidth="120" Height="30" HorizontalContentAlignment="Center" Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" LostFocus="NumberTextBox_LostFocus" Text="{Binding Order.CarGrossWeight,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">净 重</TextBlock>
-                            <TextBox Grid.Row="1" Grid.Column="2" Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" Text="{Binding Order.CarNetWeight}"/>
+                            <!--<wpfcustomcontrollibrary:NumberTextBox Grid.Row="1" Grid.Column="2" MinWidth="100" Height="30" HorizontalContentAlignment="Center" Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" LostFocus="NumberTextBox_LostFocus" Text="{Binding Order.CarNetWeight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>-->
+                            <TextBlock Grid.Row="1" Grid.Column="2" Height="30"  Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" Text="{Binding Order.CarNetWeight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </Grid>
                     </StackPanel>
                 </Border>

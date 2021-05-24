@@ -179,6 +179,8 @@ namespace biubiu.views.marketing.ship_order
             datacontext.GetData();
             datacontext.Order.Reset();
             datacontext.CurrentCustomerPage.Page = 0;
+            NTB_Care.Text = "0";
+            NTB_Net.Text = "0";
             //datacontext.RunPond();
         }
 
@@ -652,5 +654,19 @@ namespace biubiu.views.marketing.ship_order
             */
         }
 
+        private void NumberTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox txt) {
+                if (string.IsNullOrEmpty(txt.Text)) txt.Text = "0";
+                else
+                {
+                    double.TryParse(txt.Text, out double d);
+                    txt.Text = d.ToString();
+                }
+            }
+            var datacontext = DataContext as ShipOrderViewModel;
+            datacontext.Order.CarNetWeight = Common.Double2DecimalCalculate(datacontext.Order.CarGrossWeight - datacontext.Order.CarTare);
+            datacontext.Calculate(0);
+        }
     }
 }

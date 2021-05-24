@@ -1074,8 +1074,9 @@ namespace biubiu.view_model.ship_order
         /// </summary>
         public void RefreshWeight()
         {
-            if (CurrentPonderationDisplay != null)
-            {
+            //if (CurrentPonderationDisplay != null)
+            //{
+            /*
                 if (Order.Status == 0)
                 {
                     Order.CarTare = Convert.ToDouble(CurrentPonderationDisplay.Weight);
@@ -1083,9 +1084,13 @@ namespace biubiu.view_model.ship_order
                 else if (Order.Status == 1)
                 {
                     Order.CarGrossWeight = Convert.ToDouble(CurrentPonderationDisplay.Weight);
+            */
                     Calculate(0);
+            /*
                 }
-            }
+            */
+            //}
+            /*
             foreach (var item in PonderDisplayItems)
             {
                 if (item.Name.Equals(CurrentPonderationDisplay?.Name))
@@ -1097,6 +1102,7 @@ namespace biubiu.view_model.ship_order
                     item.UnSelected();
                 }
             }
+            */
         }
 
         public void ResetSnapshotPicture()
