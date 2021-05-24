@@ -471,6 +471,29 @@ namespace biubiu.model.ship_order
             }
         }
 
+        // 电话
+        private string _phone;
+        public string Phone
+        {
+            get { return _phone; }
+            set
+            {
+                _phone = value;
+                NotifyPropertyChanged("Phone");
+            }
+        }
+
+        // 平台金额
+        private double _platformMoney;
+        public double PlatformMoney
+        {
+            get { return _platformMoney; }
+            set
+            {
+                _platformMoney = value;
+                NotifyPropertyChanged("PlatformMoney");
+            }
+        }
 
         /// <summary>
         /// 重置所有变量
