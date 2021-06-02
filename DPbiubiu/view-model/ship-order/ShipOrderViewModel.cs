@@ -686,6 +686,7 @@ namespace biubiu.view_model.ship_order
             if (sender != 1)
             {
                 Order.OrderMoney = Common.Double2DecimalCalculate(Order.CarNetWeight * Order.GoodsRealPrice);
+                Order.PlatformMoney = Common.Double2DecimalCalculate(Order.CarNetWeight * Order.GoodsPrice);
                 if (Order.CustomerType == 0 && Order.Customer == null)
                 {
                     switch (Config.SYSTEM_SETTING.ShipOrderDiscount)
@@ -790,9 +791,10 @@ namespace biubiu.view_model.ship_order
             {
                 RequestStatus.AddOneRequest();
                 #region 提交校验
-                if (CurrentPonderationDisplay == null) { BiuMessageBoxWindows.BiuShow("未选择地磅!", image: BiuMessageBoxImage.Error); return; }
+                //if (CurrentPonderationDisplay == null) { BiuMessageBoxWindows.BiuShow("未选择地磅!", image: BiuMessageBoxImage.Error); return; }
                 if (Order.EmptyCar != 1 && Order.CarNetWeight < 0.0) { BiuMessageBoxWindows.BiuShow("净重不可小于0!", image: BiuMessageBoxImage.Error); return; }
                 if (Order.CustomerType == 1 && Order.Customer == null) { BiuMessageBoxWindows.BiuShow("请选择客户!", image: BiuMessageBoxImage.Error); return; }
+                if (string.IsNullOrEmpty(Order.RFID)) { BiuMessageBoxWindows.BiuShow("请录入RFID!", image: BiuMessageBoxImage.Error); return; }
                 if (string.IsNullOrWhiteSpace(Order.CarId) || Order.Goods == null) { BiuMessageBoxWindows.BiuShow("未填写车牌号或未选择料品!", image: BiuMessageBoxImage.Error); return; }
                 if (Order.EmptyCar == 1 && Order.CarNetWeight >= 0.4) { BiuMessageBoxWindows.BiuShow("净重较大，不可设置为空车出厂!"); return; }
                 if (Order.Status == 0 && Order.CarTare < 0.4 && BiuMessageBoxResult.No.Equals(BiuMessageBoxWindows.BiuShow("皮重小于0.4，是否继续提交?", BiuMessageBoxButton.YesNo, BiuMessageBoxImage.Question))) return;
@@ -836,9 +838,11 @@ namespace biubiu.view_model.ship_order
                     }
 
                     //抓拍
+                    /*
                     var pondConfig = CurrentPonderationDisplay.PondConfig;
                     if (pondConfig.CaptureEnable)
                         CapturePicture(pondConfig, Result.Data.ID);
+                    */
 
                     CarIDSearchFeed = "";
                     ResetOrder(true);

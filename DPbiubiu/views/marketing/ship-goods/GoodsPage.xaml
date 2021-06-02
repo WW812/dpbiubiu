@@ -83,7 +83,7 @@
                             </StackPanel>
                             <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 2" Background="#FFCCCCCC"/>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" FontSize="16" Margin="12" Text="标准价格"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" FontSize="16" Margin="12" Text="平台价格"/>
                             <TextBlock Grid.Row="2" Grid.Column="1" FontSize="16" Margin="12" Text="{Binding Price}" Visibility="{Binding IsEditing, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}"/>
                             <TextBox Grid.Row="2" Grid.Column="1" FontSize="16" Margin="6" Text="{Binding EditPrice}" MaxLength="9"
                                      Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"

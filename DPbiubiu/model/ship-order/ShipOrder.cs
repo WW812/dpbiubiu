@@ -86,7 +86,7 @@ namespace biubiu.model.ship_order
                 NotifyPropertyChanged("CarId");
             }
         }
-        //料品单价
+        //料品单价(平台价格)
         private double _goodsPrice = 0.0;
         public double GoodsPrice
         {
@@ -483,7 +483,7 @@ namespace biubiu.model.ship_order
             }
         }
 
-        // 平台金额
+        // 平台金额(总价)
         private double _platformMoney;
         public double PlatformMoney
         {
@@ -492,6 +492,18 @@ namespace biubiu.model.ship_order
             {
                 _platformMoney = value;
                 NotifyPropertyChanged("PlatformMoney");
+            }
+        }
+
+        // Sung
+        private string _rfid = "测试RFID";
+        public string RFID
+        {
+            get { return _rfid; }
+            set
+            {
+                _rfid = value;
+                NotifyPropertyChanged("RFID");
             }
         }
 
@@ -530,6 +542,10 @@ namespace biubiu.model.ship_order
             Note = "";
             ModifyNum = 0;
             Cubic = 0.0;
+            Phone = "";
+            PlatformMoney = 0.0;
+            // Sung
+            RFID = "RFID测试";
         }
 
         /// <summary>
@@ -594,9 +610,9 @@ namespace biubiu.model.ship_order
                                 }
                             }
                             else
-                            { 
+                            {
                                 //不抹零
-                                DiscountMoney = Common.Double2DecimalCalculate(OrderMoney % 1);
+                                DiscountMoney = 0;//Common.Double2DecimalCalculate(OrderMoney % 1);
                             }
                         }
                         else

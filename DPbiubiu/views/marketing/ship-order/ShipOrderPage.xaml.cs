@@ -179,8 +179,8 @@ namespace biubiu.views.marketing.ship_order
             datacontext.GetData();
             datacontext.Order.Reset();
             datacontext.CurrentCustomerPage.Page = 0;
-            NTB_Care.Text = "0";
-            NTB_Net.Text = "0";
+            NTB_Gross.Text = "0";
+            NTB_Tare.Text = "0";
             //datacontext.RunPond();
         }
 
@@ -392,6 +392,8 @@ namespace biubiu.views.marketing.ship_order
             dataContext.GetData();  //拉取数据
             SelectedGoodsChips(null);  //重置料品控件颜色
             EnterDataGrid.SelectedItem = null; //清空选择状态
+            NTB_Tare.Text = "0";
+            NTB_Gross.Text = "0";
             dataContext.CurrentCustomerPage.Page = 0;
             CustomerComboBox2.AccountTextBox.Text = "";
             CustomerComboBox2.AccountPopup.IsOpen = false;
@@ -419,6 +421,8 @@ namespace biubiu.views.marketing.ship_order
                 dataContext.CustomerCarItems = null;
                 dataContext.Order = Common.DeepCopy(EnterDataGrid.SelectedItem as ShipOrder);
                 dataContext.Order.Status = 1;
+                NTB_Tare.Text = dataContext.Order.CarTare.ToString();
+                NTB_Gross.Text = dataContext.Order.CarGrossWeight.ToString();
                 SelectedGoodsChips(dataContext.Order.Goods);
                 if (dataContext.Order.Customer != null)
                 {
@@ -656,15 +660,18 @@ namespace biubiu.views.marketing.ship_order
 
         private void NumberTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
+            var datacontext = DataContext as ShipOrderViewModel;
             if (sender is TextBox txt) {
                 if (string.IsNullOrEmpty(txt.Text)) txt.Text = "0";
                 else
                 {
                     double.TryParse(txt.Text, out double d);
                     txt.Text = d.ToString();
+                    if (txt.Name.Equals("NTB_Tare")) datacontext.Order.CarTare = d;
+                    if (txt.Name.Equals("NTB_Gross")) datacontext.Order.CarGrossWeight = d;
                 }
             }
-            var datacontext = DataContext as ShipOrderViewModel;
+            //datacontext.Order.CarGrossWeight = NTB_Care.Text;
             datacontext.Order.CarNetWeight = Common.Double2DecimalCalculate(datacontext.Order.CarGrossWeight - datacontext.Order.CarTare);
             datacontext.Calculate(0);
         }

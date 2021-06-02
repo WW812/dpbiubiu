@@ -64,7 +64,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox x:Name="GoodsPrice" wpf:HintAssist.Hint="标准价格" Style="{DynamicResource MaterialDesignFloatingHintTextBox}"                 
+        <TextBox x:Name="GoodsPrice" wpf:HintAssist.Hint="平台价格" Style="{DynamicResource MaterialDesignFloatingHintTextBox}"                 
                  Margin="0 6 0 0" PreviewTextInput="GoodsPrice_PreviewTextInput" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"
                  FontSize="22" Grid.Row="3" LostFocus="TextBox_LostFocus" MaxLength="8" Text="{Binding Price}" AcceptsReturn="False">
                  <!--

@@ -107,6 +107,9 @@ namespace biubiu.views.login
 
         public async void Login()
         {
+            // Sung 调试用
+            AccountTextBox.Text = "15612345678";
+            PassWordTextBox.Password = "123456";
             if (_logining) return;
             _logining = true;
             if (AccountTextBox.Text.Equals("") || PassWordTextBox.Password.Equals(""))
