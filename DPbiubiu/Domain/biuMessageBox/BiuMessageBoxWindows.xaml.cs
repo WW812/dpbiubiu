@@ -38,6 +38,7 @@ namespace biubiu.Domain.biuMessageBox
             BiuMessageBoxResult r = BiuMessageBoxResult.None;
             try
             {
+                if (messageText is null) messageText = string.Empty;
                 var _poolKey = messageText + caption;
                 if (_pool.ContainsKey(_poolKey)) return r;
                 _pool.Add(_poolKey, button);
