@@ -202,6 +202,7 @@ namespace biubiu.view_model.ship_order
                 if (sender != 1)
                 {
                     Order.OrderMoney = Common.Double2DecimalCalculate(Order.CarNetWeight * Order.GoodsRealPrice);
+                    Order.PlatformMoney = Common.Double2DecimalCalculate(Order.CarNetWeight * Order.GoodsPrice);
                     if (Order.CustomerType == 0 && Order.Customer == null)
                     {
                         switch (Config.SYSTEM_SETTING.ShipOrderDiscount)

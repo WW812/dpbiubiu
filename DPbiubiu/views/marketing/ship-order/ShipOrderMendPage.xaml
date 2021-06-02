@@ -109,7 +109,7 @@
                    TextSearch.TextPath="Name" DisplayMemberPath="Name" 
                    SelectedItem="{Binding Order.Goods}" ItemsSource="{Binding GoodsItems}">
         </ComboBox>
-        <TextBlock Grid.Row="5" Grid.Column="4">标准价格:</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="4">平台价格:</TextBlock>
         <TextBlock Grid.Row="5" Grid.Column="6" Text="{Binding Order.GoodsPrice}"></TextBlock>
         <TextBlock Grid.Row="5" Grid.Column="8">执行价格:</TextBlock>
         <TextBox x:Name="GoodsRealPriceTextBox" Grid.Row="5" Grid.Column="10" FontSize="18" Text="{Binding Order.GoodsRealPrice}"
@@ -125,10 +125,18 @@
                  LostFocus="TextBox_LostFocus" TextChanged="TextBox_TextChanged" MaxLength="9"/>
         <TextBlock Grid.Row="6" Grid.Column="8">实收金额:</TextBlock>
         <TextBlock Grid.Row="6" Grid.Column="10" Foreground="Red" FontWeight="Bold" Text="{Binding Order.RealMoney}"></TextBlock>
+        <TextBlock Grid.Row="7" Grid.Column="0">RFID:</TextBlock>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Order.RFID}" FontSize="18"/>
+        <TextBlock Grid.Row="7" Grid.Column="4">电话:</TextBlock>
+        <TextBox Grid.Row="7" Grid.Column="6" Text="{Binding Order.Phone}" FontSize="18"/>
+        <TextBlock Grid.Row="7" Grid.Column="8">平台金额:</TextBlock>
+        <TextBlock Grid.Row="7" Grid.Column="10" Foreground="Green" FontWeight="Bold" Text="{Binding Order.PlatformMoney}" FontSize="18"/>
+        <!--
         <TextBlock Grid.Row="7" Grid.Column="0">方量:</TextBlock>
         <TextBox Grid.Row="7" Grid.Column="2" Text="{Binding Order.Cubic}" PreviewTextInput="TextBox_PreviewTextInput" FontSize="18"
                  CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False" MaxLength="10"
                  LostFocus="TextBox_LostFocus" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"/>
+                 -->
 
         <TextBlock Grid.Row="8" Grid.Column="0">备注:</TextBlock>
         <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="10" materialDesign:HintAssist.Hint="备注" Text="{Binding Order.Note}"/>

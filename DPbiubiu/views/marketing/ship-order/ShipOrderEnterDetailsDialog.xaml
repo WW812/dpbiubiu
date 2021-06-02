@@ -114,7 +114,7 @@
         <ComboBox Grid.Row="5" Grid.Column="1" Margin="0,-20,0,0" FontSize="18" Grid.ColumnSpan="3" ItemsSource="{Binding GoodsItems}"
                   SelectedItem="{Binding Order.Goods,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ComboBox_SelectionChanged"
                   Visibility="{Binding IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" DisplayMemberPath="Name"/>
-        <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource CTextBlock}">标准单价:</TextBlock>
+        <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource CTextBlock}">平台单价:</TextBlock>
         <TextBlock Grid.Row="6" Grid.Column="1"  Text="{Binding Order.GoodsPrice}" Style="{StaticResource CTextBlock}"></TextBlock>
         <TextBlock Grid.Row="6" Grid.Column="2" Style="{StaticResource CTextBlock}">执行单价:</TextBlock>
         <TextBlock Grid.Row="6" Grid.Column="3" Text="{Binding Order.GoodsRealPrice}" Style="{StaticResource CTextBlock}"/>
