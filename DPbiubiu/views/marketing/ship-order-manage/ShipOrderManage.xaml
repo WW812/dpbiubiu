@@ -80,12 +80,12 @@
                 <DataGridTextColumn Header="皮重" Binding="{Binding Path=CarTare}" />
                 <DataGridTextColumn Header="净重" Binding="{Binding Path=CarNetWeight}" />
                 <DataGridTextColumn Header="料品名称" Binding="{Binding Path=Goods.Name}"/>
-                <DataGridTextColumn Header="标准单价" Binding="{Binding Path=GoodsPrice}" />
+                <DataGridTextColumn Header="平台单价" Binding="{Binding Path=GoodsPrice}" />
                 <DataGridTextColumn Header="执行单价" Binding="{Binding Path=GoodsRealPrice}" />
                 <DataGridTextColumn Header="应收金额" Binding="{Binding Path=OrderMoney}" />
                 <DataGridTextColumn Header="优惠金额" Binding="{Binding Path=DiscountMoney}" />
                 <DataGridTextColumn Header="实收金额" Binding="{Binding Path=RealMoney}" />
-                <DataGridTextColumn Header="方量" Binding="{Binding Path=Cubic}" />
+                <!--<DataGridTextColumn Header="方量" Binding="{Binding Path=Cubic}" />-->
                 <DataGridTextColumn Header="进厂时间" FontSize="14"  Binding="{Binding Path=EnterTime,Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" />
                 <DataGridTextColumn Header="进厂司磅员" Binding="{Binding Path=EnterUser.NickName}" />
                 <!--<DataGridTextColumn Header="进厂地磅号" Binding="{Binding Path=EnterPonderation}" />-->

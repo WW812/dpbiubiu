@@ -124,27 +124,37 @@
                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False" MaxLength="6"
                 Visibility="{Binding IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" PreviewTextInput="TextBox_PreviewTextInput" />
 
+<!--
         <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource CTextBlock}">预装吨数:</TextBlock>
         <TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding Order.AdvanceWeight}" Style="{StaticResource CTextBlock}" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"/>
+        -->
 
-        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource CTextBlock}">皮重:</TextBlock>
-        <TextBlock Grid.Row="5" Grid.Column="1"  Text="{Binding Order.CarTare}" Style="{StaticResource CTextBlock}"
+        <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource CTextBlock}">皮重:</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="3"  Text="{Binding Order.CarTare}" Style="{StaticResource CTextBlock}"
                    Visibility="{Binding IsEditing, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}"/>
-        <TextBox x:Name="CarTareText" Grid.Row="5" Grid.Column="1" Margin="0 -20 0 0" Text="{Binding Order.CarTare}" FontSize="18" Height="26"
+        <TextBox x:Name="CarTareText" Grid.Row="4" Grid.Column="3" Margin="0 -20 0 0" Text="{Binding Order.CarTare}" FontSize="18" Height="26"
                 Visibility="{Binding IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" PreviewTextInput="TextBox_PreviewTextInput"
                  LostFocus="TextBox_LostFocus" TextChanged="TextBox_TextChanged" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"
                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False" MaxLength="6"/>
 
-        <TextBlock Grid.Row="5" Grid.Column="2" Style="{StaticResource CTextBlock}">净重:</TextBlock>
-        <TextBlock Grid.Row="5" Grid.Column="3" Text="{Binding Order.CarNetWeight}" Style="{StaticResource CTextBlock}"></TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource CTextBlock}">净重:</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Order.CarNetWeight}" Style="{StaticResource CTextBlock}"></TextBlock>
+
+        <TextBlock Grid.Row="5" Grid.Column="2" Style="{StaticResource CTextBlock}">RFID:</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="3" Text="{Binding Order.RFID}" Style="{StaticResource CTextBlock}"></TextBlock>
 
         <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource CTextBlock}">料品:</TextBlock>
-        <TextBlock Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Order.Goods.Name}" Style="{StaticResource CTextBlock}"
+        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Order.Goods.Name}" Style="{StaticResource CTextBlock}"
                    Visibility="{Binding IsEditing, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}"/>
-        <ComboBox Grid.Row="6" Grid.Column="1" Margin="0,-20,0,0" FontSize="18" Grid.ColumnSpan="3" ItemsSource="{Binding GoodsItems}"
+        <ComboBox Grid.Row="6" Grid.Column="1" Margin="0,-20,0,0" FontSize="18" ItemsSource="{Binding GoodsItems}"
                   SelectedItem="{Binding Order.Goods,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ComboBox_SelectionChanged"
                   Visibility="{Binding IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" DisplayMemberPath="Name"/>
-        <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource CTextBlock}">标准单价:</TextBlock>
+        <TextBlock Grid.Row="6" Grid.Column="2" Style="{StaticResource CTextBlock}">电话:</TextBlock>
+        <TextBlock Grid.Row="6" Grid.Column="3" Text="{Binding Order.Phone}" Style="{StaticResource CTextBlock}"
+                   Visibility="{Binding IsEditing, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}"/>
+        <TextBox Grid.Row="6" Grid.Column="3" Margin="0,-20,0,0" Text="{Binding Order.Phone}" FontSize="18" Height="26"
+                Visibility="{Binding IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+        <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource CTextBlock}">平台单价:</TextBlock>
         <TextBlock Grid.Row="7" Grid.Column="1"  Text="{Binding Order.GoodsPrice}" Style="{StaticResource CTextBlock}"></TextBlock>
         <TextBlock Grid.Row="7" Grid.Column="2" Style="{StaticResource CTextBlock}">执行单价:</TextBlock>
         <TextBlock Grid.Row="7" Grid.Column="3" Text="{Binding Order.GoodsRealPrice}" Style="{StaticResource CTextBlock}"
@@ -165,7 +175,10 @@
                 CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False" MaxLength="10"/>
         <TextBlock Grid.Row="9" Grid.Column="0" Style="{StaticResource CTextBlock}">实收:</TextBlock>
         <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding Order.RealMoney}" Style="{StaticResource CTextBlock}"/>
+        <TextBlock Grid.Row="9" Grid.Column="2" Style="{StaticResource CTextBlock}">平台金额:</TextBlock>
+        <TextBlock Grid.Row="9" Grid.Column="3" Text="{Binding Order.PlatformMoney}" Style="{StaticResource CTextBlock}"/>
 
+<!--
         <TextBlock Grid.Row="9" Grid.Column="2" Style="{StaticResource CTextBlock}">方量:</TextBlock>
         <TextBlock Grid.Row="9" Grid.Column="3" Text="{Binding Order.Cubic}" Style="{StaticResource CTextBlock}" 
                    Visibility="{Binding IsEditing, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}"/>
@@ -173,6 +186,7 @@
                 Visibility="{Binding IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" Margin="0,-20,0,0" 
                  CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False" MaxLength="10" Height="26"
                  LostFocus="TextBox_LostFocus" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"/>
+                 -->
 
         <TextBlock Grid.Row="10" Grid.Column="0" Style="{StaticResource CTextBlock}">进厂时间:</TextBlock>
         <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding Order.EnterTime, Converter={StaticResource LongToDateTimeConverter}, StringFormat='yyyy-MM-dd HH:mm'}" Style="{StaticResource CTextBlock}"/>

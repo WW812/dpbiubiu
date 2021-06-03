@@ -98,8 +98,9 @@
         <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource CTextBlock}">编号:</TextBlock>
         <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Order.EnterOrderNo}" Style="{StaticResource CTextBlock}"/>
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource CTextBlock}">皮重:</TextBlock>
-        <TextBlock Grid.Row="4" Grid.Column="1"  Text="{Binding Order.CarTare}" Style="{StaticResource CTextBlock}"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource CTextBlock}">皮重:</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="3"  Text="{Binding Order.CarTare}" Style="{StaticResource CTextBlock}"/>
+        <!--
         <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource CTextBlock}">预装吨数:</TextBlock>
         <TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding Order.AdvanceWeight}" Style="{StaticResource CTextBlock}" 
                    Visibility="{Binding IsEditing, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}"/>
@@ -107,7 +108,15 @@
                  FontSize="18" Height="26" LostFocus="TextBox_LostFocus" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"
                  Visibility="{Binding IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" MaxLength="10"
                  PreviewTextInput="TextBox_PreviewTextInput" />
-
+                   -->
+        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource CTextBlock}">RFID:</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Order.RFID}" Style="{StaticResource CTextBlock}"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource CTextBlock}">电话:</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="3" Text="{Binding Order.Phone}" Style="{StaticResource CTextBlock}"
+                    Visibility="{Binding IsEditing, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}"/>
+        <TextBox Grid.Row="4" Grid.Column="3" Margin="0,-20,0,0" Text="{Binding Order.Phone,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"
+                 FontSize="18" Height="26" Visibility="{Binding IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                 MaxLength="10"/>
         <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource CTextBlock}">料品:</TextBlock>
         <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Order.Goods.Name}" Style="{StaticResource CTextBlock}"
                     Visibility="{Binding IsEditing, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}"/>
