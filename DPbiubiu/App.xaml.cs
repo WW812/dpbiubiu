@@ -33,7 +33,7 @@ namespace biubiu
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            ProgramStarted = new EventWaitHandle(false, EventResetMode.AutoReset, "MyTctiApp", out bool createNew);
+            ProgramStarted = new EventWaitHandle(false, EventResetMode.AutoReset, "DPbiubiu", out bool createNew);
 
             DirectoryInfo dir = new DirectoryInfo("C:/");
             foreach (var item in dir.GetFileSystemInfos())
