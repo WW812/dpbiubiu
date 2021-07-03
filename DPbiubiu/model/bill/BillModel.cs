@@ -28,6 +28,10 @@ namespace biubiu.model.bill
         public double Weight { get; set; }
         // 总钱数
         public double Money { get; set; }
+        // 总平台金额
+        public double TotalPlatformMoney { get; set; }
+        // 总差价
+        public double TotalPlatDiffMoney { get; set; }
         // 提单人姓名
         public string CreateUserName { get; set; }
 
@@ -39,6 +43,8 @@ namespace biubiu.model.bill
             Count = bm.Count;
             Weight = bm.Weight;
             Money = bm.Money;
+            TotalPlatformMoney = bm.TotalPlatformMoney;
+            TotalPlatDiffMoney = bm.TotalPlatDiffMoney;
         }
     }
 }

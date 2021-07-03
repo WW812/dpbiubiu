@@ -40,12 +40,22 @@ namespace biubiu.model.bill
         /// 总重量
         /// </summary>
         public double Weight { get; set; }
+        /// <summary>
+        /// 平台金额
+        /// </summary>
+        public double PlatformMoney { get; set; }
+        /// <summary>
+        /// 差价
+        /// </summary>
+        public double PlatDiffMoney { get; set; }
         public BillDataModel()
         {
             Count = 0;
             Money = 0.0;
             GoodsName = "";
             Weight = 0.0;
+            PlatformMoney = 0.0;
+            PlatDiffMoney = 0.0;
         }
     }
 
@@ -72,6 +82,14 @@ namespace biubiu.model.bill
         /// </summary>
         public string GoodsName { get; set; }
         /// <summary>
+        /// 平台金额
+        /// </summary>
+        public double PlatformMoney { get; set; }
+        /// <summary>
+        /// 差价
+        /// </summary>
+        public double PlatDiffMoney { get; set; }
+        /// <summary>
         /// 方量
         /// </summary>
         public double Cubic { get; set; }
@@ -83,6 +101,8 @@ namespace biubiu.model.bill
             Weight = 0.0;
             GoodsName = "";
             Cubic = 0.0;
+            PlatformMoney = 0.0;
+            PlatDiffMoney = 0.0;
         }
     }
 }
