@@ -104,23 +104,31 @@ namespace biubiu.view_model.ship_order
             var overallCount = 0;
             var overallWeight = 0.0;
             var overallMoney = 0.0;
+            var overallPlatformMoney = 0.0;
+            var overallPlatDiffMoney = 0.0;
 
             r.Data.Customer.ForEach(x =>
             {
                 overallCount += x.Count;
                 overallWeight += x.Weight;
                 overallMoney += x.Money;
+                overallPlatformMoney += x.PlatformMoney;
+                overallPlatDiffMoney += x.PlatDiffMoney;
             });
             r.Data.Retail.ForEach(x =>
             {
                 overallCount += x.Count;
                 overallWeight += x.Weight;
                 overallMoney += x.Money;
+                overallPlatformMoney += x.PlatformMoney;
+                overallPlatDiffMoney += x.PlatDiffMoney;
             });
 
             ReportParameter overallCountParameter = new ReportParameter("OverallCount", overallCount.ToString());
             ReportParameter overallWeightParameter = new ReportParameter("OverallWeight", overallWeight.ToString());
             ReportParameter overallMoneyParameter = new ReportParameter("OverallMoney", overallMoney.ToString());
+            ReportParameter overallPlatformMoneyParameter = new ReportParameter("OverallPlatformMoney", overallPlatformMoney.ToString());
+            ReportParameter overallPlatDiffMoneyParameter = new ReportParameter("OverallPlatDiffMoney", overallPlatDiffMoney.ToString());
             ReportParameter referNicknameParameter = new ReportParameter("ReferNickname", Config.CURRENT_USER.NickName);
             ReportParameter referDatetimeParameter = new ReportParameter("ReferDatetime", DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
 
@@ -131,7 +139,7 @@ namespace biubiu.view_model.ship_order
             BillReportViewer.LocalReport.DataSources.Add(retailDataSource);
             BillReportViewer.LocalReport.DataSources.Add(customerDataSource);
             BillReportViewer.LocalReport.DataSources.Add(cusDataSource);
-            BillReportViewer.LocalReport.SetParameters(new ReportParameter[] { overallCountParameter, overallWeightParameter, overallMoneyParameter, referNicknameParameter, referDatetimeParameter });
+            BillReportViewer.LocalReport.SetParameters(new ReportParameter[] { overallCountParameter, overallWeightParameter, overallMoneyParameter, referNicknameParameter, referDatetimeParameter, overallPlatformMoneyParameter, overallPlatDiffMoneyParameter });
             BillReportViewer.RefreshReport();
         }
 

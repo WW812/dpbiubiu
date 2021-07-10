@@ -107,6 +107,8 @@ namespace biubiu.views.marketing.ship_bill
             ReportParameter overallCountParameter = new ReportParameter("OverallCount", data.Count.ToString());
             ReportParameter overallWeightParameter = new ReportParameter("OverallWeight", data.Weight.ToString());
             ReportParameter overallMoneyParameter = new ReportParameter("OverallMoney", data.Money.ToString());
+            ReportParameter overallPlatformMoneyParameter = new ReportParameter("OverallPlatformMoney", data.TotalPlatformMoney.ToString());
+            ReportParameter overallPlatDiffMoneyParameter = new ReportParameter("OverallPlatDiffMoney", data.TotalPlatDiffMoney.ToString());
             ReportParameter referNicknameParameter = new ReportParameter("ReferNickname", data.CreateUserName);
             ReportParameter referDatetimeParameter = new ReportParameter("ReferDatetime", Common.TimeStamp2DateTime(data.CreateTime ?? 0).ToString());
 
@@ -123,7 +125,7 @@ namespace biubiu.views.marketing.ship_bill
             BillReportViewer.LocalReport.DataSources.Add(retailDataSource);
             BillReportViewer.LocalReport.DataSources.Add(customerDataSource);
             BillReportViewer.LocalReport.DataSources.Add(cusDataSource);
-            BillReportViewer.LocalReport.SetParameters(new ReportParameter[] { overallCountParameter, overallWeightParameter, overallMoneyParameter, referNicknameParameter, referDatetimeParameter });
+            BillReportViewer.LocalReport.SetParameters(new ReportParameter[] { overallCountParameter, overallWeightParameter, overallMoneyParameter, referNicknameParameter, referDatetimeParameter, overallPlatformMoneyParameter, overallPlatDiffMoneyParameter });
             BillReportViewer.RefreshReport();
         }
 
