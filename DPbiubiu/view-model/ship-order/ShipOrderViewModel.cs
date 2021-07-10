@@ -797,7 +797,7 @@ namespace biubiu.view_model.ship_order
                 if (string.IsNullOrEmpty(Order.RFID)) { BiuMessageBoxWindows.BiuShow("请录入RFID!", image: BiuMessageBoxImage.Error); return; }
                 if (string.IsNullOrWhiteSpace(Order.CarId) || Order.Goods == null) { BiuMessageBoxWindows.BiuShow("未填写车牌号或未选择料品!", image: BiuMessageBoxImage.Error); return; }
                 if (Order.EmptyCar == 1 && Order.CarNetWeight >= 0.4) { BiuMessageBoxWindows.BiuShow("净重较大，不可设置为空车出厂!"); return; }
-                if (Order.Status == 0 && Order.CarTare < 0.4 && BiuMessageBoxResult.No.Equals(BiuMessageBoxWindows.BiuShow("皮重小于0.4，是否继续提交?", BiuMessageBoxButton.YesNo, BiuMessageBoxImage.Question))) return;
+                //if (Order.Status == 0 && Order.CarTare < 0.4 && BiuMessageBoxResult.No.Equals(BiuMessageBoxWindows.BiuShow("皮重小于0.4，是否继续提交?", BiuMessageBoxButton.YesNo, BiuMessageBoxImage.Question))) return;
                 if (Order.Status == 1 && Order.EmptyCar == 0 && Math.Abs(Order.CarGrossWeight - Order.CarTare) <= 0.4 && !BiuMessageBoxResult.Yes.Equals(BiuMessageBoxWindows.BiuShow("毛重皮重相差较小，是否继续提交?", BiuMessageBoxButton.YesNo, BiuMessageBoxImage.Question))) return;
                 if (Order.Status == 1 && (Order.GoodsRealPrice == 0 || Order.RealMoney == 0) && BiuMessageBoxResult.No.Equals(BiuMessageBoxWindows.BiuShow("执行单价或实收金额为0，是否继续提交?", BiuMessageBoxButton.YesNo, BiuMessageBoxImage.Question))) return;
                 if (Order.EmptyCar == 1 && BiuMessageBoxResult.No.Equals(BiuMessageBoxWindows.BiuShow("是否设置为空车出厂?", BiuMessageBoxButton.YesNo, BiuMessageBoxImage.Question))) return;

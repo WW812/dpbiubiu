@@ -111,10 +111,10 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">皮 重</TextBlock>
-                            <wpfcustomcontrollibrary:NumberTextBox x:Name="NTB_Tare" Grid.Row="1" Grid.Column="1" MinWidth="120" Height="30" HorizontalContentAlignment="Center" 
+                            <wpfcustomcontrollibrary:NumberTextBox x:Name="NTB_Tare" Grid.Row="1" Grid.Column="1" MinWidth="120" Height="30" HorizontalContentAlignment="Center" Visibility="{Binding Order.Status, Converter={StaticResource IntToVisibilityConverter}}"
                                            Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" LostFocus="NumberTextBox_LostFocus" Text="{Binding Order.CarTare,StringFormat={}{0}}"/>
                             <TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">毛 重</TextBlock>
-                            <wpfcustomcontrollibrary:NumberTextBox x:Name="NTB_Gross" Grid.Row="1" Grid.Column="0" MinWidth="120" Height="30" HorizontalContentAlignment="Center" 
+                            <wpfcustomcontrollibrary:NumberTextBox x:Name="NTB_Gross" Grid.Row="1" Grid.Column="0" MinWidth="120" Height="30" HorizontalContentAlignment="Center" Visibility="{Binding Order.Status, Converter={StaticResource IntToVisibilityConverter}}"
                                            Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" LostFocus="NumberTextBox_LostFocus" Text="{Binding Order.CarGrossWeight,StringFormat={}{0}}"/>
                             <TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">净 重</TextBlock>
                             <!--<wpfcustomcontrollibrary:NumberTextBox Grid.Row="1" Grid.Column="2" MinWidth="100" Height="30" HorizontalContentAlignment="Center" Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" LostFocus="NumberTextBox_LostFocus" Text="{Binding Order.CarNetWeight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>-->
