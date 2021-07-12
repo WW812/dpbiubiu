@@ -344,7 +344,7 @@ namespace biubiu.model.ship_order
             EditTimeVisibility = Visibility.Hidden;
             EditReasonVisibility = Visibility.Hidden;
             EditNoteVisibility = Visibility.Hidden;
-            CubicVisibility = Visibility.Visible;
+            CubicVisibility = Visibility.Hidden;
         }
 
         //空车单据

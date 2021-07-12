@@ -496,7 +496,7 @@ namespace biubiu.model.ship_order
         }
 
         // Sung
-        private string _rfid = "测试RFID";
+        private string _rfid;
         public string RFID
         {
             get { return _rfid; }
@@ -545,7 +545,7 @@ namespace biubiu.model.ship_order
             Phone = "";
             PlatformMoney = 0.0;
             // Sung
-            RFID = "RFID测试";
+            RFID = "";
         }
 
         /// <summary>

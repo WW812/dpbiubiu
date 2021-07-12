@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-        Title="大宗物资称量系统" Background="#FFFFFDFD" MinWidth="1360" MinHeight="768">
+        Title="大宗物资称量系统" Background="#FFFFFDFD" MinWidth="1360" MinHeight="768" Closing="Window_Closing">
     <materialDesign:DialogHost Identifier="RootDialog">
         <Grid>
             <materialDesign:DrawerHost BorderBrush="{DynamicResource MaterialDesignDivider}" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">

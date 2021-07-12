@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -310,6 +311,26 @@ namespace biubiu.Domain
             Guid guid = Guid.NewGuid();
             string str = guid.ToString();
             return str;
+        }
+
+        /// <summary>
+        /// 根据进程名字获取一个进程
+        /// </summary>
+        /// <param name="ProcessName"></param>
+        /// <returns></returns>
+        public static Process GetProcByName(string processName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(processName)) return null;
+                Process[] myProgress;
+                myProgress = Process.GetProcesses();//获取当前启动的所有进程
+                return myProgress.First(x=> processName.Equals(x.ProcessName));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 

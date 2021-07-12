@@ -62,6 +62,7 @@ namespace biubiu.views
         private readonly List<string> _roles = new List<string>(); //权限名列表
         private string _currentPageName = "default";
 
+
         public MainWindow(LoginWindow window)
         {
             _roles.Clear();
@@ -165,6 +166,18 @@ namespace biubiu.views
                 //{
                     MainFrame.Content = LeftMenuPool[tag];
                     _currentPageName = tag;
+            /*
+            try
+            {
+                ShipOrderPage sop = LeftMenuPool[_currentPageName] as ShipOrderPage;
+                ShipOrderViewModel sovm = sop.DataContext as ShipOrderViewModel;
+                if ("销售出料过磅".Equals(_currentPageName))
+                    sovm.Run_RFID_LJYZN();
+                else
+                    sovm.CloseRFID();
+            }
+            catch { }
+            */
                 //}));
             //});
         }
@@ -514,6 +527,16 @@ namespace biubiu.views
                 if (File.Exists("./AdjustPrintEnabled.awe"))
                     File.Delete("./AdjustPrintEnabled.awe");
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                // 关闭RFID进程
+                Common.GetProcByName("RFIDReader_LJYZN")?.Kill();
+            }
+            catch { }
         }
     }
 }

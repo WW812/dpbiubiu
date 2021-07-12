@@ -442,6 +442,7 @@ namespace biubiu.view_model.ship_order
         /// 交账窗口
         /// </summary>
         private ReferBillWindow BillWindow = null;
+        
 
         /// <summary>
         /// 构造函数
@@ -451,9 +452,137 @@ namespace biubiu.view_model.ship_order
             //Order = new ShipOrder();
             PonderDisplayItems = new ObservableCollection<PonderationDisplay> { Pond1, Pond2, Pond3, Pond4 };
             ColumnsVisibility = Config.ShipColVisibility;
+            //Run_RFID_LJYZN();
             //GetData();
             //RunPond();
         }
+        #region 发卡器
+        private bool _rfidRead = false;
+        private Process _rfidProc = new Process();
+        private readonly string[] _errorStr = { "未找到发卡器，请检查设备连接后重试!", "未知错误,请重试!" };
+        private readonly ProcessStartInfo _rfidStartInfo = new ProcessStartInfo
+        {
+            FileName = "./RFID/RFID_LJYZN/RFIDReader_LJYZN.exe",
+            UseShellExecute = false,
+            RedirectStandardInput = false,
+            RedirectStandardOutput = true,
+            CreateNoWindow = true
+        };
+
+        public Visibility _btnRFIDShow = Visibility.Collapsed; // 控制RFID重试按钮是否显示
+        public Visibility BtnRFIDShow
+        {
+            get
+            {
+                return _btnRFIDShow;
+            }
+
+            set
+            {
+                _btnRFIDShow = value;
+                NotifyPropertyChanged("BtnRFIDShow");
+            }
+        }
+
+        public void Run_RFID_LJYZN()
+        {
+            try {
+                var proc = Common.GetProcByName("RFIDReader_LJYZN");
+                proc?.Kill();
+                _rfidProc.StartInfo = _rfidStartInfo;
+                _rfidProc.Start();
+                Thread.Sleep(100);
+                _rfidRead = true;
+                Task.Run(() =>
+                {
+                    while (_rfidRead)
+                    {
+                        try
+                        {
+                            DecodeRFIDCode(_rfidProc.StandardOutput.ReadLine());
+                            Thread.Sleep(200);
+                        }
+                        catch { }
+                    }
+                });
+            }
+            catch(Exception er)
+            {
+                BiuMessageBoxWindows.BiuShow(er.Message);
+                _rfidProc.Close();
+            }
+        }
+
+        /// <summary>
+        /// 解析RFID返回码
+        /// </summary>
+        private void DecodeRFIDCode(string code)
+        {
+            if (code is null)
+            {
+                Order.RFID = "";
+                BtnRFIDShow = Visibility.Hidden;
+            }
+            // 代表通讯正常
+            else if ("0".Equals(code))
+            {
+                //if (Order.RFID.Contains(_errorStr[0]) || Order.RFID.Contains(_errorStr[1]))
+                    //Order.RFID = "";
+                BtnRFIDShow = Visibility.Hidden;
+            }
+            // 得到卡内容
+            else if (code.Contains("$$=="))
+            {
+                Order.RFID = code.Replace("$$==", "");
+                BtnRFIDShow = Visibility.Hidden;
+            }
+            // 未找到发卡器
+            else if ("-1".Equals(code))
+            {
+                //Order.RFID =  _errorStr[0];
+                BiuMessageBoxWindows.BiuShow(_errorStr[0]);
+                BtnRFIDShow = Visibility.Visible;
+                CloseRFID();
+            }
+            // 未知异常
+            else if (code.Contains("Error:"))
+            {
+                BiuMessageBoxWindows.BiuShow(code);
+                //Order.RFID = _errorStr[1];
+                BtnRFIDShow = Visibility.Visible;
+                CloseRFID();
+            }
+            else
+            {
+                Order.RFID = "";
+                BtnRFIDShow = Visibility.Hidden;
+            }
+        }
+
+        public void CloseRFID()
+        {
+            _rfidRead = false;
+            _rfidProc.Close();
+        }
+
+        public ICommand RetryRFIDCommand => new AnotherCommandImplementation(ExecuteRetryRFIDCommand);
+        private void ExecuteRetryRFIDCommand(object o)
+        {
+            try
+            {
+                CloseRFID();
+                Thread.Sleep(200);
+                Run_RFID_LJYZN();
+            }
+            catch(Exception er)
+            {
+                BiuMessageBoxWindows.BiuShow(er.Message);
+                CloseRFID();
+            }
+        }
+
+        #endregion
+
 
         /// <summary>
         /// 根据地磅配置运行串口

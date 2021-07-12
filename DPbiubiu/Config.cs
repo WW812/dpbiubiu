@@ -81,6 +81,13 @@ namespace biubiu
         public static Snapshot SnapshotPicture = null;
 
         /*
+        #region 模块切换事件
+        public delegate void PageChangedHandler(object sender, string pageName);
+        public static event PageChangedHandler PageChanged;
+        #endregion 
+        */
+
+        /*
         public static PonderSubject cs1 = new PonderSubject();
         public static PonderSubject cs2 = new PonderSubject();
         public static PonderSubject cs3 = new PonderSubject();

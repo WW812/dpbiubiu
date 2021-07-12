@@ -12,8 +12,8 @@
              xmlns:md="clr-namespace:biubiu.model.ship_goods"
              xmlns:biuCovert ="clr-namespace:biubiu.Converter"
              xmlns:softKeyBoard ="clr-namespace:biubiu.Domain.softKeyBoard" xmlns:wpfcustomcontrollibrary="clr-namespace:Sung.WPFCustomControlLibrary;assembly=WPFCustomControlLibrary"
-             mc:Ignorable="d" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
-             d:DesignHeight="1080" d:DesignWidth="1920">
+             mc:Ignorable="d" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"  
+             d:DesignHeight="1080" d:DesignWidth="1920" >
     <UserControl.Resources>
         <ControlTemplate x:Key="validationTemplate">
             <Grid>
@@ -185,8 +185,9 @@
                                  ToolTip="{Binding Order.Customer.Balance}"/>元
                             </TextBlock>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="8" Margin="0 12"
-                                VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="22">RFID:<Run Text="{Binding Order.RFID}"></Run></TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="0 12"
+                                VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="22">RFID: <Run Text="{Binding Order.RFID, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></Run></TextBlock>
+                            <Button Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2" Width="80" Visibility="{Binding BtnRFIDShow,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Command="{Binding RetryRFIDCommand}">重试</Button>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="8" Margin="0 12">
                                 <TextBlock FontSize="22">电话:</TextBlock>
