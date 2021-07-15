@@ -53,6 +53,7 @@ namespace biubiu.views.marketing.ship_order
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            var datacontext = DataContext as ShipOrderDetailsViewModel;
             #region 客户下拉框绑定
             BindingOperations.SetBinding(CustomerComboBox2.AccountListBox, ItemsControl.ItemsSourceProperty,
                 new Binding
@@ -83,8 +84,9 @@ namespace biubiu.views.marketing.ship_order
             }
             #endregion
 
+            datacontext.AwakeRFID_LJYZN();
+
             #region 加载图片
-            var datacontext = DataContext as ShipOrderDetailsViewModel;
             var list = Task.Run(() => {
                 return ModelHelper.GetInstance().GetApiDataArg(
                            ModelHelper.ApiClient.GetPictureURL,
@@ -130,6 +132,8 @@ namespace biubiu.views.marketing.ship_order
             }
             #endregion
         }
+
+        
 
         private void WatchBigImgEvent(object sender, RoutedEventArgs e)
         {
@@ -261,6 +265,8 @@ namespace biubiu.views.marketing.ship_order
                 item.Source = null;
             }
             _images.Clear();
+            var datacontext = DataContext as ShipOrderDetailsViewModel;
+            datacontext.RemoveRFID_LJYZN();
         }
     }
 }

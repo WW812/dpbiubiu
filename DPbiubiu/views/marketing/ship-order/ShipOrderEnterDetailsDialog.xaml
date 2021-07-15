@@ -110,7 +110,7 @@
                  PreviewTextInput="TextBox_PreviewTextInput" />
                    -->
         <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource CTextBlock}">RFID:</TextBlock>
-        <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Order.RFID}" Style="{StaticResource CTextBlock}"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Order.RFID}" FontSize="12" Style="{StaticResource CTextBlock}"/>
         <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource CTextBlock}">电话:</TextBlock>
         <TextBlock Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="3" Text="{Binding Order.Phone}" Style="{StaticResource CTextBlock}"
                     Visibility="{Binding IsEditing, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}"/>

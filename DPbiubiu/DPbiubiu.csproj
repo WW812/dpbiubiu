@@ -393,6 +393,7 @@
       <DependentUpon>PreviewCameraWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Domain\RegexChecksum.cs" />
+    <Compile Include="Domain\RFIDHelper.cs" />
     <Compile Include="Domain\SearchListBoxControl.xaml.cs">
       <DependentUpon>SearchListBoxControl.xaml</DependentUpon>
     </Compile>

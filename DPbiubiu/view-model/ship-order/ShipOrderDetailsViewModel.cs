@@ -260,6 +260,48 @@ namespace biubiu.view_model.ship_order
             });
         }
 
+        #region 发卡器
+        public void AwakeRFID_LJYZN()
+        {
+            EventCenter.AddListener<LJYZN_RFIDEventInfomation>(EventType.LJYZN_RFID, DecodeRFIDCode);
+        }
+
+        public void RemoveRFID_LJYZN()
+        {
+            EventCenter.RemoveListener<LJYZN_RFIDEventInfomation>(EventType.LJYZN_RFID, DecodeRFIDCode);
+        }
+
+        /// <summary>
+        /// 解析RFID返回码
+        /// </summary>
+        private void DecodeRFIDCode(LJYZN_RFIDEventInfomation rfidInfo)
+        {
+            if (!IsEditing) return;
+            switch (rfidInfo.Code)
+            {
+                case 0:
+                    // 代表通讯正常
+                    //BtnRFIDShow = Visibility.Hidden;
+                    break;
+                case 1:
+                    // 得到卡内容
+                    Order.RFID = rfidInfo.Data;
+                    break;
+                case -1:
+                // 未找到发卡器
+                case -2:
+                    // 未知异常
+                    BiuMessageBoxWindows.BiuShow(rfidInfo.Error);
+                    //BtnRFIDShow = Visibility.Visible;
+                    break;
+                default:
+                    Order.RFID = "";
+                    //BtnRFIDShow = Visibility.Hidden;
+                    break;
+            }
+        }
+        #endregion
+
         public ICommand EditingCommand => new AnotherCommandImplementation(ExecuteEditingCommand); //进行修改编辑
         public ICommand CancelEditingCommand => new AnotherCommandImplementation(ExecuteCancelEditingCommand); //取消修改编辑
         public ICommand SubmitCommand => new AnotherCommandImplementation(ExecuteSubmitCommand); //提交修改

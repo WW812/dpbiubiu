@@ -141,7 +141,7 @@
         <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Order.CarNetWeight}" Style="{StaticResource CTextBlock}"></TextBlock>
 
         <TextBlock Grid.Row="5" Grid.Column="2" Style="{StaticResource CTextBlock}">RFID:</TextBlock>
-        <TextBlock Grid.Row="5" Grid.Column="3" Text="{Binding Order.RFID}" Style="{StaticResource CTextBlock}"></TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="3" Text="{Binding Order.RFID}" FontSize="12" Style="{StaticResource CTextBlock}"></TextBlock>
 
         <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource CTextBlock}">料品:</TextBlock>
         <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Order.Goods.Name}" Style="{StaticResource CTextBlock}"

@@ -534,7 +534,8 @@ namespace biubiu.views
             try
             {
                 // 关闭RFID进程
-                Common.GetProcByName("RFIDReader_LJYZN")?.Kill();
+                //Common.GetProcByName("RFIDReader_LJYZN")?.Kill();
+                RFIDHelper.GetInstance().CloseRFID();
             }
             catch { }
         }

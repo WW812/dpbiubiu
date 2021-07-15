@@ -181,8 +181,9 @@ namespace biubiu.views.marketing.ship_order
             datacontext.CurrentCustomerPage.Page = 0;
             NTB_Gross.Text = "0";
             NTB_Tare.Text = "0";
+            RFIDHelper.GetInstance().Run_RFID_LJYZN();
+            datacontext.AwakeRFID_LJYZN();
             //datacontext.RunPond();
-            datacontext.Run_RFID_LJYZN();
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -191,8 +192,6 @@ namespace biubiu.views.marketing.ship_order
             var datacontext = DataContext as ShipOrderViewModel;
             datacontext.ClosePond();
             */
-            var datacontext = DataContext as ShipOrderViewModel;
-            datacontext.CloseRFID();
         }
 
         /// <summary>

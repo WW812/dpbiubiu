@@ -76,7 +76,8 @@ namespace biubiu.Domain
     /// </summary>
     public enum EventType
     {
-        Ponder
+        Ponder,
+        LJYZN_RFID
     }
 
     /// <summary>
@@ -91,5 +92,12 @@ namespace biubiu.Domain
         public string Weight;
         public string Error;
         public bool Reset = false; // 重置显示
+    }
+
+    public class LJYZN_RFIDEventInfomation
+    {
+        public int Code; // -2: 未知异常； -1:连接异常（未找到发卡器）; 0: 通讯正常; 1: 读取数据; 2: 其他; 
+        public string Data;
+        public string Error;
     }
 }
