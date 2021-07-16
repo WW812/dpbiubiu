@@ -155,7 +155,12 @@
         <TextBox Grid.Row="6" Grid.Column="3" Margin="0,-20,0,0" Text="{Binding Order.Phone}" FontSize="18" Height="26"
                 Visibility="{Binding IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
         <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource CTextBlock}">平台单价:</TextBlock>
-        <TextBlock Grid.Row="7" Grid.Column="1"  Text="{Binding Order.GoodsPrice}" Style="{StaticResource CTextBlock}"></TextBlock>
+        <TextBlock Grid.Row="7" Grid.Column="1"  Text="{Binding Order.GoodsPrice}" Style="{StaticResource CTextBlock}"
+                   Visibility="{Binding IsEditing, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}"></TextBlock>
+        <TextBox x:Name="GoodsPriceTextBox" Grid.Row="7" Grid.Column="1" Margin="0,-20,0,0" Text="{Binding Order.GoodsPrice}" FontSize="18" Height="26"
+                Visibility="{Binding IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" PreviewTextInput="TextBox_PreviewTextInput" 
+                 LostFocus="TextBox_LostFocus" TextChanged="TextBox_TextChanged" GotFocus="TextBox_GotFocus" PreviewMouseDown="TextBox_PreviewMouseDown"
+                CommandManager.PreviewCanExecute="HandleCanExecute" InputMethod.IsInputMethodEnabled="False" MaxLength="8"/>
         <TextBlock Grid.Row="7" Grid.Column="2" Style="{StaticResource CTextBlock}">执行单价:</TextBlock>
         <TextBlock Grid.Row="7" Grid.Column="3" Text="{Binding Order.GoodsRealPrice}" Style="{StaticResource CTextBlock}"
                    Visibility="{Binding IsEditing, Converter={StaticResource ReverseInvertedBooleanToVisibilityConverter}}"/>

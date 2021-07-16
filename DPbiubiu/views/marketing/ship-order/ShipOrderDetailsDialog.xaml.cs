@@ -241,6 +241,10 @@ namespace biubiu.views.marketing.ship_order
                     //datacontext.Order.Calculate(0);
                     datacontext.Calculate(0);
                     break;
+                case "GoodsPriceTextBox":
+                    datacontext.Order.GoodsPrice = Convert.ToDouble(text);
+                    datacontext.Calculate(0);
+                    break;
                 case "DiscountMoneyTextBox":
                     datacontext.Order.DiscountMoney = Convert.ToDouble(text);
                     //datacontext.Order.Calculate(1);
