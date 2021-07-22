@@ -96,5 +96,10 @@ namespace biubiu.views.marketing.customer.ship_customer
                 e.Handled = true;
             }
         }
+
+        private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = e.Row.GetIndex() + 1;
+        }
     }
 }

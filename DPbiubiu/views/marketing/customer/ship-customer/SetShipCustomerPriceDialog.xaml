@@ -45,8 +45,18 @@
         </StackPanel>
 
         <DataGrid Grid.Row="3"  CanUserSortColumns="True" CanUserAddRows="False" IsReadOnly="True" Height="400" FontSize="18"
-                  AutoGenerateColumns="False" ItemsSource="{Binding ShipCustomerGoodsPriceItems}" VerticalScrollBarVisibility="Auto">
+                  AutoGenerateColumns="False" ItemsSource="{Binding ShipCustomerGoodsPriceItems}" VerticalScrollBarVisibility="Auto"
+                  LoadingRow="DataGrid_LoadingRow">
             <DataGrid.Columns>
+                <DataGridTemplateColumn Header="序号" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGridRow}}, Path=Header}"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                   Margin="10,0,0,0"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="料品" Binding="{Binding GoodsName}" />
                 <DataGridTextColumn Header="执行单价" Binding="{Binding RealPrice}"/>
                 <DataGridTemplateColumn Header="优惠额度">

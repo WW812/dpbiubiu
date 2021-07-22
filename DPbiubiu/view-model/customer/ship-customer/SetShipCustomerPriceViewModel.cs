@@ -83,7 +83,7 @@ namespace biubiu.view_model.customer.ship_customer
                 ShipCustomerGoodsPriceItems = new ObservableCollection<ShipCustomerGoodsPrice>(
                    ModelHelper.GetInstance().GetApiDataArg(new ApiDelegateArg<List<ShipCustomerGoodsPrice>>(
                        ApiClient.GetShipCustomerGoodsPriceAsync),
-                       new ShipCustomerGoodsPrice { CustomerId = CurrentCustomer.ID }).Result.Data);
+                       new ShipCustomerGoodsPrice { CustomerId = CurrentCustomer.ID,Size = 500}).Result.Data);
             });
         }
 
