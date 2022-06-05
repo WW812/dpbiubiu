@@ -22,7 +22,7 @@ namespace biubiu
     public class Config
     {
         //public static IApi ApiClient = HttpApiFactory.Create<IApi>();
-        public static string ServerURL = "http://49.235.94.208:8080/weigh/";   // 远程服务器
+        public static string ServerURL = "http://101.42.224.128:8080/weigh/";   // 远程服务器
         public const string UserURL = "user/";
         public const string ShipOrderURL = "orderSales/";
         public const string ShipCustomerURL = "customerSales/";
