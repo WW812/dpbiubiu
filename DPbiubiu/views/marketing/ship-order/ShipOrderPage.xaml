@@ -185,7 +185,7 @@
                                  ToolTip="{Binding Order.Customer.Balance}"/>元
                             </TextBlock>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="8" Margin="0 12"
+                            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="8" Margin="0 12" Visibility="Collapsed"
                                 VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="22">RFID:<Run Text="{Binding Order.RFID}"></Run></TextBlock>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="8" Margin="0 12">
