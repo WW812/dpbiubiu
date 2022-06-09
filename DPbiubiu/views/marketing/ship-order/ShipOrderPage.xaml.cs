@@ -412,6 +412,7 @@ namespace biubiu.views.marketing.ship_order
                 EnterDataGrid.IsEnabled = false;
                 //_selectedCarId = true;
                 var dataContext = DataContext as ShipOrderViewModel;
+                return;
                 if (EnterDataGrid.SelectedItem == null || dataContext.MenuIndex != 0) return;
                 //dataContext.Order.Reset();
                 //dataContext.ResetOrder(true);
@@ -674,6 +675,11 @@ namespace biubiu.views.marketing.ship_order
             //datacontext.Order.CarGrossWeight = NTB_Care.Text;
             datacontext.Order.CarNetWeight = Common.Double2DecimalCalculate(datacontext.Order.CarGrossWeight - datacontext.Order.CarTare);
             datacontext.Calculate(0);
+        }
+
+        private void NTB_Gross_GotFocus(object sender, RoutedEventArgs e)
+        {
+            NTB_Gross.SelectAll();
         }
     }
 }

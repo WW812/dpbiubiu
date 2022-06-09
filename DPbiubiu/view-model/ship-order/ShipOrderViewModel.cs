@@ -451,6 +451,7 @@ namespace biubiu.view_model.ship_order
             //Order = new ShipOrder();
             PonderDisplayItems = new ObservableCollection<PonderationDisplay> { Pond1, Pond2, Pond3, Pond4 };
             ColumnsVisibility = Config.ShipColVisibility;
+            ColumnsVisibility.ColumnsMode(2);
             //GetData();
             //RunPond();
         }
@@ -584,60 +585,9 @@ namespace biubiu.view_model.ship_order
         {
             OrdersItems?.Clear();
             CurrentPage.Reset(20);
-            var m = MenuIndex == 2 ? -1 : MenuIndex;
-            /*
+            var m = 1;// MenuIndex == 2 ? -1 : MenuIndex;
             RequestStatus.StartRequest(() =>
             {
-                OrderListBoxIsEnabled = false;
-                OrdersItems = new ObservableCollection<ShipOrder>(
-                    GetApiDataArg(ApiClient.GetShipOrdersAsync,
-                    new
-                    {
-                        CarId = CarIDSearchFeed.Equals("") ? null : CarIDSearchFeed,
-                        Status = m,
-                        Page = CurrentPage.Page - 1,
-                        Size = CurrentPage.Size
-                    }, delegate (PageModel p) { CurrentPage = p; }).Result);
-                OrderListBoxIsEnabled = true;
-            });
-            */
-            RequestStatus.StartRequest(() =>
-            {
-                /*
-                OrderListBoxIsEnabled = false;
-                try
-                {
-                    var Result = ApiClient.GetShipOrdersAsync(new
-                    {
-                        CarId = CarIDSearchFeed.Equals("") ? null : CarIDSearchFeed,
-                        Status = m,
-                        Page = CurrentPage.Page - 1,
-                        Size = CurrentPage.Size
-                    }).GetAwaiter().GetResult();
-                    if (Result.Code != 200)
-                    {
-                        throw new Exception(Result.ToString());
-                    }
-                    else
-                    {
-                        OrdersItems = new ObservableCollection<ShipOrder>(Result.Data);
-                        CurrentPage = Result.Page;
-                        JObject jar = JObject.Parse(Result.Obj.ToString());
-                        var str = "车数： " + jar["totalCount"] + "            重量：" + (jar["totalWeight"] ?? 0) + "            金额：" + (jar["totalMoney"] ?? 0) + "            零售金额：" + (jar["salesMoney"] ?? 0) + "            客户金额：" + (jar["cusMoney"] ?? 0);
-                        DetailOrderStr = str;
-                    }
-                }
-                catch (Exception er)
-                {
-                    var msg = "";
-                    if (er.InnerException != null)
-                        msg += er.InnerException.Message + "\n";
-                    msg += er.Message;
-                    if (er is TaskCanceledException) msg = "服务器请求超时，请稍后重试！";
-                    BiuMessageBoxWindows.BiuShow(msg, image: BiuMessageBoxImage.Error);
-                }
-                OrderListBoxIsEnabled = true;
-                */
                 OrderListBoxIsEnabled = false;
                 var r = ModelHelper.GetInstance().GetApiDataArg(ModelHelper.ApiClient.GetShipOrdersAsync,
                     new
@@ -803,6 +753,7 @@ namespace biubiu.view_model.ship_order
                 if (Order.EmptyCar == 1 && BiuMessageBoxResult.No.Equals(BiuMessageBoxWindows.BiuShow("是否设置为空车出厂?", BiuMessageBoxButton.YesNo, BiuMessageBoxImage.Question))) return;
                 #endregion
                 var Result = new DataInfo<ShipOrder>();
+                /*
                 #region 进厂
                 if (Order.Status == 0)
                 {
@@ -819,6 +770,22 @@ namespace biubiu.view_model.ship_order
                     Result = await ModelHelper.GetInstance().GetApiDataArg(ModelHelper.ApiClient.CreateExitShipOrderAsync, Order);
                 }
                 #endregion
+                */
+                RequestStatus.AddOneRequest();
+                try
+                {
+                    Result = await ModelHelper.GetInstance().GetApiDataArg(ApiClient.MendShipOrderAsync, Order);
+                    if (Result.Code != 200)
+                        throw new Exception(Result.ToString());
+                }
+                catch (Exception er)
+                {
+                    BiuMessageBoxWindows.BiuShow(er.Message, image: BiuMessageBoxImage.Error);
+                }
+                finally
+                {
+                    RequestStatus.CompleteOneRequest();
+                }
 
                 if (Result.Code != 200)
                 {
@@ -999,7 +966,7 @@ namespace biubiu.view_model.ship_order
                 SnackbarViewModel.GetInstance().PoupMessageAsync("已到底部");
                 return;
             }
-            var m = MenuIndex == 2 ? -1 : MenuIndex;
+            var m = 1;// MenuIndex == 2 ? -1 : MenuIndex;
             RequestStatus.StartRequest(() =>
             {
                 CurrentPage.Page++;
@@ -1202,7 +1169,7 @@ namespace biubiu.view_model.ship_order
                     RefreshWeight();
                     break;
                 case "MenuIndex":
-                    ColumnsVisibility.ColumnsMode(MenuIndex);
+                    //ColumnsVisibility.ColumnsMode(MenuIndex);
                     CarIDSearchFeed = "";
                     GetOrders();
                     CurrentPage.Page = 1;

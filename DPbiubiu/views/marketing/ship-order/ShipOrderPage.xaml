@@ -111,10 +111,10 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">皮 重</TextBlock>
-                            <wpfcustomcontrollibrary:NumberTextBox x:Name="NTB_Tare" Grid.Row="1" Grid.Column="1" MinWidth="120" Height="30" HorizontalContentAlignment="Center" Visibility="{Binding Order.Status, Converter={StaticResource IntToVisibilityConverter}}"
+                            <wpfcustomcontrollibrary:NumberTextBox x:Name="NTB_Tare" Grid.Row="1" Grid.Column="1" MinWidth="120" Height="30" HorizontalContentAlignment="Center" 
                                            Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" LostFocus="NumberTextBox_LostFocus" Text="{Binding Order.CarTare,StringFormat={}{0}}"/>
                             <TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">毛 重</TextBlock>
-                            <wpfcustomcontrollibrary:NumberTextBox x:Name="NTB_Gross" Grid.Row="1" Grid.Column="0" MinWidth="120" Height="30" HorizontalContentAlignment="Center" Visibility="{Binding Order.Status, Converter={StaticResource IntToVisibilityConverter}}"
+                            <wpfcustomcontrollibrary:NumberTextBox x:Name="NTB_Gross" Grid.Row="1" Grid.Column="0" MinWidth="120" Height="30" HorizontalContentAlignment="Center"
                                            Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" LostFocus="NumberTextBox_LostFocus" Text="{Binding Order.CarGrossWeight,StringFormat={}{0}}"/>
                             <TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" Margin="0,0,0,14">净 重</TextBlock>
                             <!--<wpfcustomcontrollibrary:NumberTextBox Grid.Row="1" Grid.Column="2" MinWidth="100" Height="30" HorizontalContentAlignment="Center" Foreground="Red" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" LostFocus="NumberTextBox_LostFocus" Text="{Binding Order.CarNetWeight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>-->
@@ -273,7 +273,8 @@
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0" Width="120" Height="40" Click="Button_Click"
                             Command="{Binding SubmitOrderCommand}" IsEnabled="{Binding RequestStatus.IsAllComplete}" HorizontalAlignment="Right">
-                                <TextBlock FontSize="18" Text="{Binding Order.Status,Converter={StaticResource OrderStatusToSubmitButtonTextConverter},ConverterParameter=0}"/>
+                                <!--<TextBlock FontSize="18" Text="{Binding Order.Status,Converter={StaticResource OrderStatusToSubmitButtonTextConverter},ConverterParameter=0}"/>-->
+                                <TextBlock FontSize="18" Text="录入"/>
                             </Button>
                             <StackPanel Orientation="Horizontal" Grid.Column="1">
                                 <CheckBox  ToolTip="勾选之后该单据变为空车出厂" Margin="50 4"
@@ -306,18 +307,19 @@
                     <!-- the following based on https://material.io/guidelines/components/buttons.html#buttons-toggle-buttons -->
                     <ListBox x:Name="MenuBtn" Style="{StaticResource MaterialDesignToolToggleListBox}" Grid.Row="0" IsEnabled="{Binding OrderListBoxIsEnabled}"  wpf:ListBoxAssist.IsToggle="False"
                          SelectedIndex="{Binding MenuIndex}" FontSize="22" HorizontalAlignment="Center" SelectionChanged="ListBox_SelectionChanged" SelectionMode="Single">
+                         <!--
                         <ListBoxItem x:Name="EnterShowButton">
                             未结账
-                            <!--<wpf:PackIcon Kind="FormatAlignLeft"/>-->
                         </ListBoxItem>
+                        -->
                         <ListBoxItem x:Name="ExitShowButton">
                             已结账
-                            <!--<wpf:PackIcon Kind="FormatAlignCenter"/>-->
                         </ListBoxItem>
+                        <!--
                         <ListBoxItem x:Name="EmptyShowButton">
                             空车出厂
-                            <!--<wpf:PackIcon Kind="FormatAlignRight"/>-->
                         </ListBoxItem>
+                        -->
                     </ListBox>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">

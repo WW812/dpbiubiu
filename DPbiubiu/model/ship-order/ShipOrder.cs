@@ -525,7 +525,7 @@ namespace biubiu.model.ship_order
             OrderMoney = 0.0;
             DiscountMoney = 0.0;
             RealMoney = 0.0;
-            Status = 0;
+            Status = 1;
             EmptyCar = 0;
             Hedge = 0;
             Type = 0;
@@ -545,7 +545,7 @@ namespace biubiu.model.ship_order
             Phone = "";
             PlatformMoney = 0.0;
             // Sung
-            RFID = "RFID测试";
+            RFID = "";
         }
 
         /// <summary>
