@@ -451,7 +451,7 @@ namespace biubiu.view_model.ship_order
             //Order = new ShipOrder();
             PonderDisplayItems = new ObservableCollection<PonderationDisplay> { Pond1, Pond2, Pond3, Pond4 };
             ColumnsVisibility = Config.ShipColVisibility;
-            ColumnsVisibility.ColumnsMode(2);
+            ColumnsVisibility.ColumnsMode(1);
             //GetData();
             //RunPond();
         }
