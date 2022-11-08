@@ -797,7 +797,7 @@ namespace biubiu.view_model.ship_order
                     //打印票据
                     try
                     {
-                        BillPrinter.GetInstance().PrintShip(Result.Data, "");
+                        //BillPrinter.GetInstance().PrintShip(Result.Data, "");
                     }
                     catch (Exception er)
                     {
